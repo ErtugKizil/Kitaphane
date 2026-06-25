@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitaphane</title>
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Manrope:wght@300;400;500;600;700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#F5EFE6;
+  --cream2:#EFE3D0;
+  --cream3:#E4D5BB;
+  --surface:#FFF9F0;
+  --surface2:#FAF3E8;
+  --espresso:#2B2118;
+  --dark-brown:#5A3825;
+  --mid-brown:#6B4423;
+  --warm-brown:#8A6240;
+  --tan:#B8895B;
+  --copper:#C49A6C;
+  --sand:#D4B896;
+  --text-dark:#2B2118;
+  --text-mid:#4A3728;
+  --text-muted:#7A6A58;
+  --text-faint:#A89880;
+  --gold:#B8924A;
+  --gold-light:#D4AC6A;
+  --chestnut:#7C3A2A;
+  --chestnut-light:#A04835;
+  --olive:#4A5A38;
+  --olive-light:#667A52;
+  --olive-pale:#E8EDDF;
+  --status-unread-bg:#F0E8DC;--status-unread-fg:#6B4423;
+  --status-reading-bg:#E8EDDF;--status-reading-fg:#3A5028;
+  --status-finished-bg:#F2E8E0;--status-finished-fg:#7C3A2A;
+  --status-paused-bg:#EDE8E2;--status-paused-fg:#5A4A38;
+  --status-dropped-bg:#ECE9E5;--status-dropped-fg:#8A7A6A;
+  --radius:10px;--radius-lg:14px;--radius-xl:18px;
+  --sidebar-w:220px;
+  --paper-texture:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(139,98,64,.018) 2px,rgba(139,98,64,.018) 3px);
+}
+
+body{font-family:'Manrope',sans-serif;background:var(--cream);color:var(--text-dark);font-size:16px;min-height:100vh;background-image:var(--paper-texture);-webkit-font-smoothing:antialiased}
+h1,h2,h3,.serif{font-family:'Playfair Display',serif}
+
+/* ── APP SHELL: sidebar + content ── */
+#app{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar-w);
+  background:rgba(43,33,24,.97);
+  backdrop-filter:blur(12px);
+  position:fixed;top:0;left:0;bottom:0;
+  display:flex;flex-direction:column;
+  z-index:200;
+  border-right:1px solid rgba(255,255,255,.06);
+}
+.sidebar::after{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
+  background:linear-gradient(180deg,transparent,var(--copper) 40%,var(--gold) 70%,transparent);
+  opacity:.3;
+}
+
+.sidebar-logo{
+  padding:28px 20px 24px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  cursor:pointer;
+  display:flex;align-items:center;gap:11px;
+}
+.sidebar-logo-icon{
+  width:38px;height:38px;
+  background:linear-gradient(135deg,var(--warm-brown),var(--copper));
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+  flex-shrink:0;
+}
+.sidebar-logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.sidebar-logo-tagline{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-top:1px;font-weight:500}
+
+.sidebar-nav{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:4px}
+
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 14px;
+  border-radius:var(--radius);
+  border:none;
+  background:none;
+  color:rgba(255,255,255,.5);
+  font-family:'Manrope',sans-serif;font-size:15px;font-weight:500;
+  cursor:pointer;
+  transition:all .18s;
+  letter-spacing:.01em;
+  width:100%;text-align:left;
+}
+.nav-item-icon{font-size:17px;width:22px;text-align:center;flex-shrink:0;transition:transform .18s}
+.nav-item:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.85)}
+.nav-item:hover .nav-item-icon{transform:scale(1.15)}
+.nav-item.active{background:rgba(196,154,108,.18);color:var(--copper);font-weight:600}
+.nav-item.active .nav-item-icon{filter:drop-shadow(0 0 4px rgba(196,154,108,.5))}
+
+/* CTA — Kitap Ekle */
+.sidebar-add{
+  margin:12px;
+  padding:14px 18px;
+  background:linear-gradient(135deg,var(--copper) 0%,var(--gold) 60%,#D4882A 100%);
+  color:var(--espresso);
+  border:none;
+  border-radius:var(--radius-lg);
+  font-family:'Manrope',sans-serif;font-size:16px;font-weight:700;
+  cursor:pointer;
+  transition:all .22s cubic-bezier(.25,.8,.25,1);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  letter-spacing:.01em;
+  box-shadow:0 4px 18px rgba(180,130,50,.35),inset 0 1px 0 rgba(255,255,255,.3);
+  position:relative;
+  overflow:hidden;
+}
+.sidebar-add::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 60%);
+  border-radius:var(--radius-lg);
+}
+.sidebar-add:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(180,130,50,.48),inset 0 1px 0 rgba(255,255,255,.3);
+  filter:brightness(1.06);
+}
+.sidebar-add:active{transform:translateY(0)}
+.sidebar-add-icon{font-size:18px;position:relative}
+.sidebar-add-label{position:relative}
+
+.sidebar-footer{
+  padding:16px 14px;
+  border-top:1px solid rgba(255,255,255,.06);
+  font-size:11px;color:rgba(255,255,255,.2);
+  text-align:center;letter-spacing:.05em;
+}
+
+/* MAIN CONTENT */
+.content{
+  margin-left:var(--sidebar-w);
+  flex:1;
+  display:flex;flex-direction:column;
+  min-height:100vh;
+}
+
+main{
+  padding:36px 36px;
+  flex:1;
+  max-width:1000px;
+  width:100%;
+}
+
+/* HERO */
+.hero{margin-bottom:40px;padding-bottom:36px;border-bottom:1px solid rgba(90,56,37,.1)}
+.hero h1{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:var(--text-dark);line-height:1.08;margin-bottom:12px;letter-spacing:-.02em}
+.hero h1 em{color:var(--dark-brown);font-style:italic}
+.hero p{font-size:17px;color:var(--text-muted);margin-bottom:26px;font-weight:400;max-width:480px;line-height:1.65}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.hero-btn-primary{
+  background:var(--espresso);color:var(--cream);border:none;
+  padding:13px 28px;border-radius:var(--radius-lg);
+  font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:8px;letter-spacing:.01em;
+  box-shadow:0 2px 10px rgba(43,33,24,.2);
+}
+.hero-btn-primary:hover{background:var(--dark-brown);box-shadow:0 5px 18px rgba(43,33,24,.3);transform:translateY(-1px)}
+.hero-btn-secondary{
+  background:transparent;color:var(--dark-brown);border:1.5px solid var(--tan);
+  padding:12px 28px;border-radius:var(--radius-lg);
+  font-family:'Manrope',sans-serif;font-size:15px;font-weight:600;
+  cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:8px;letter-spacing:.01em;
+}
+.hero-btn-secondary:hover{background:var(--cream2);border-color:var(--warm-brown);color:var(--espresso);transform:translateY(-1px)}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:36px}
+.stat-card{background:var(--surface);border:1px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);padding:22px;position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s}
+.stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--tan),transparent);opacity:.4}
+.stat-card:hover{box-shadow:0 4px 18px rgba(43,33,24,.09);transform:translateY(-1px)}
+.stat-icon{width:38px;height:38px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:14px}
+.stat-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--text-dark);line-height:1;margin-bottom:5px}
+.stat-label{font-size:12px;color:var(--text-faint);font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+
+/* SECTION */
+.section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.section-title{font-family:'Playfair Display',serif;font-size:23px;font-weight:700;color:var(--text-dark);letter-spacing:-.01em}
+.see-all{background:none;border:none;font-size:14px;font-weight:500;color:var(--warm-brown);cursor:pointer;display:flex;align-items:center;gap:4px;font-family:'Manrope',sans-serif;letter-spacing:.03em;transition:color .15s}
+.see-all:hover{color:var(--dark-brown)}
+
+/* CURRENTLY READING */
+.reading-strip{display:flex;flex-direction:column;gap:10px;margin-bottom:36px}
+.reading-item{background:var(--surface);border:1px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);padding:18px;display:flex;gap:14px;align-items:center;cursor:pointer;transition:all .18s;position:relative}
+.reading-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--olive-light);border-radius:var(--radius-lg) 0 0 var(--radius-lg)}
+.reading-item:hover{border-color:rgba(90,56,37,.2);box-shadow:0 3px 12px rgba(43,33,24,.07);transform:translateX(2px)}
+.reading-cover{width:48px;height:68px;object-fit:cover;border-radius:5px;background:var(--cream2);flex-shrink:0;box-shadow:2px 2px 8px rgba(43,33,24,.15)}
+.reading-info{flex:1;min-width:0}
+.reading-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:2px}
+.reading-author{font-size:13px;color:var(--text-muted);margin-top:2px;font-weight:400}
+.reading-note{font-size:12px;color:var(--text-faint);font-style:italic;margin-top:5px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.arrow{color:var(--sand);font-size:20px;flex-shrink:0}
+
+/* BOOK GRID */
+.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(154px,1fr));gap:16px}
+.book-card{background:var(--surface);border:1px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:all .22s cubic-bezier(.25,.8,.25,1);position:relative}
+.book-card:hover{box-shadow:0 8px 28px rgba(43,33,24,.13);border-color:rgba(90,56,37,.22);transform:translateY(-3px)}
+.book-cover{aspect-ratio:2/3;background:var(--cream2);overflow:hidden;position:relative}
+.book-cover img{width:100%;height:100%;object-fit:cover;transition:transform .35s cubic-bezier(.25,.8,.25,1)}
+.book-card:hover .book-cover img{transform:scale(1.04)}
+.cover-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px;background:linear-gradient(160deg,var(--cream2) 0%,var(--cream3) 100%)}
+.cover-placeholder-icon{font-size:24px;color:var(--sand)}
+.cover-placeholder-text{font-family:'Playfair Display',serif;font-size:11px;color:var(--text-faint);text-align:center;font-style:italic;line-height:1.4}
+.status-badge{position:absolute;top:7px;left:7px;font-size:10px;font-weight:600;padding:4px 9px;border-radius:6px;letter-spacing:.04em;text-transform:uppercase}
+.rating-badge{position:absolute;bottom:7px;right:7px;background:rgba(43,33,24,.82);color:var(--cream);font-size:10px;font-family:'Manrope',sans-serif;font-weight:600;padding:3px 8px;border-radius:6px}
+.wish-btn{position:absolute;top:7px;right:7px;width:28px;height:28px;border-radius:50%;border:none;background:rgba(245,239,230,.9);color:var(--text-faint);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:all .18s;font-size:14px;box-shadow:0 1px 4px rgba(43,33,24,.15)}
+.book-card:hover .wish-btn{opacity:1}
+.wish-btn.wishlisted{background:var(--chestnut-light);color:#fff;opacity:1}
+.wish-btn:hover{transform:scale(1.1)}
+.book-info{padding:13px 12px 12px}
+.book-title{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:600;color:var(--text-dark);line-height:1.35;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.book-author{font-size:11.5px;color:var(--warm-brown);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:400}
+.book-location{font-size:10.5px;color:var(--text-faint);margin-top:5px;display:flex;align-items:center;gap:3px;font-weight:500}
+
+/* LIST VIEW */
+.book-list{display:flex;flex-direction:column;gap:7px}
+.book-list-item{background:var(--surface);border:1px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);padding:14px 18px;display:flex;align-items:center;gap:13px;cursor:pointer;transition:all .18s}
+.book-list-item:hover{border-color:rgba(90,56,37,.2);box-shadow:0 2px 10px rgba(43,33,24,.07);transform:translateX(2px)}
+.list-cover{width:38px;height:54px;object-fit:cover;border-radius:5px;background:var(--cream2);flex-shrink:0;box-shadow:1px 2px 6px rgba(43,33,24,.12)}
+.list-info{flex:1;min-width:0}
+.list-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list-author{font-size:12px;color:var(--warm-brown);margin-top:2px;font-weight:400}
+.list-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.list-location{font-size:11px;color:var(--text-faint)}
+
+/* STATUS */
+.s-unread{background:var(--status-unread-bg);color:var(--status-unread-fg)}
+.s-reading{background:var(--status-reading-bg);color:var(--status-reading-fg)}
+.s-finished{background:var(--status-finished-bg);color:var(--status-finished-fg)}
+.s-paused{background:var(--status-paused-bg);color:var(--status-paused-fg)}
+.s-dropped{background:var(--status-dropped-bg);color:var(--status-dropped-fg)}
+
+/* TOP RATED */
+.rated-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.rated-item{background:var(--surface);border:1px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);padding:14px;display:flex;gap:12px;cursor:pointer;transition:all .18s}
+.rated-item:hover{border-color:rgba(90,56,37,.2);box-shadow:0 2px 10px rgba(43,33,24,.07)}
+.rated-cover{width:40px;height:56px;object-fit:cover;border-radius:5px;background:var(--cream2);flex-shrink:0;box-shadow:1px 2px 5px rgba(43,33,24,.12)}
+.rated-title{font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:var(--text-dark);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rated-author{font-size:11px;color:var(--warm-brown);margin-top:2px;font-weight:400}
+.rated-stars{display:flex;gap:2px;margin-top:5px}
+.rated-star{font-size:12px}
+
+/* SEARCH & FILTERS */
+.search-row{display:flex;gap:8px;margin-bottom:14px}
+.search-wrap{position:relative;flex:1}
+.search-wrap input{width:100%;padding:11px 38px 11px 40px;border:1.5px solid rgba(90,56,37,.15);border-radius:var(--radius-lg);background:var(--surface);font-family:'Manrope',sans-serif;font-size:15px;color:var(--text-dark);outline:none;transition:border .18s,box-shadow .18s}
+.search-wrap input:focus{border-color:var(--warm-brown);box-shadow:0 0 0 3px rgba(138,98,64,.1)}
+.search-wrap input::placeholder{color:var(--text-faint)}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text-faint);font-size:15px;pointer-events:none}
+.search-clear{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:17px;line-height:1;padding:2px;transition:color .15s}
+.search-clear:hover{color:var(--text-dark)}
+.view-toggle{display:flex;border:1.5px solid rgba(90,56,37,.15);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface)}
+.view-btn{border:none;padding:10px 14px;background:none;cursor:pointer;color:var(--warm-brown);font-size:16px;transition:all .15s}
+.view-btn.active{background:var(--dark-brown);color:var(--cream)}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
+.filter-select{padding:7px 30px 7px 13px;border:1.5px solid rgba(90,56,37,.15);border-radius:20px;background:var(--surface);font-family:'Manrope',sans-serif;font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A6240' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;transition:all .15s}
+.filter-select:focus,.filter-select:hover{border-color:var(--warm-brown);color:var(--text-dark)}
+.filter-select.has-value{background-color:var(--dark-brown);color:var(--cream);border-color:var(--dark-brown);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F5EFE6' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")}
+
+/* DETAIL */
+.detail-wrap{display:grid;grid-template-columns:210px 1fr;gap:36px}
+.detail-cover{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:var(--radius-lg);box-shadow:4px 8px 28px rgba(43,33,24,.2);background:var(--cream2)}
+.detail-cover-placeholder{width:100%;aspect-ratio:2/3;background:linear-gradient(160deg,var(--cream2) 0%,var(--cream3) 100%);border-radius:var(--radius-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px}
+.detail-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--text-dark);line-height:1.2;margin-bottom:6px;letter-spacing:-.02em}
+.detail-author{font-size:16px;color:var(--warm-brown);margin-bottom:14px;font-weight:400}
+.detail-status{display:inline-block;font-size:11px;font-weight:600;padding:5px 12px;border-radius:8px;margin-bottom:14px;letter-spacing:.05em;text-transform:uppercase}
+.stars{display:flex;gap:3px;margin-bottom:16px;align-items:center}
+.star{font-size:18px;cursor:default}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:18px}
+.meta-item{background:var(--cream);border:1px solid rgba(90,56,37,.08);border-radius:var(--radius);padding:12px}
+.meta-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);font-weight:600;margin-bottom:3px}
+.meta-value{font-size:14px;font-weight:600;color:var(--text-mid)}
+.desc-text{font-size:15px;color:var(--text-muted);line-height:1.75}
+.personal-note{background:var(--cream2);border-left:3px solid var(--copper);border-radius:0 var(--radius) var(--radius) 0;padding:13px 16px;margin-top:16px}
+.note-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);font-weight:600;margin-bottom:5px}
+.note-text{font-size:14px;color:var(--text-mid);font-style:italic;line-height:1.65}
+.detail-actions{display:flex;gap:9px;flex-direction:column;margin-top:16px}
+
+/* BUTTONS */
+.btn{border:none;padding:11px 20px;border-radius:var(--radius-lg);font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:7px;letter-spacing:.02em}
+.btn-primary{background:var(--dark-brown);color:var(--cream);box-shadow:0 1px 4px rgba(43,33,24,.2)}
+.btn-primary:hover{background:var(--espresso);box-shadow:0 3px 14px rgba(43,33,24,.28);transform:translateY(-1px)}
+.btn-ghost{background:var(--surface);color:var(--text-mid);border:1.5px solid rgba(90,56,37,.15)}
+.btn-ghost:hover{background:var(--cream2);border-color:var(--tan)}
+.btn-wish{background:var(--surface);color:var(--chestnut);border:1.5px solid rgba(124,58,42,.18)}
+.btn-wish.wishlisted{background:var(--chestnut-light);color:#fff;border-color:var(--chestnut-light)}
+.btn-danger{color:var(--chestnut)}
+.btn-danger:hover{background:rgba(124,58,42,.08)}
+.back-btn{background:none;border:none;color:var(--warm-brown);cursor:pointer;font-family:'Manrope',sans-serif;font-size:14px;font-weight:500;display:flex;align-items:center;gap:6px;margin-bottom:24px;padding:0;transition:color .15s;letter-spacing:.01em}
+.back-btn:hover{color:var(--dark-brown)}
+
+/* FORM */
+.form-wrap{max-width:620px}
+.form-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--warm-brown);border-bottom:1px solid rgba(90,56,37,.12);padding-bottom:10px;margin-bottom:18px}
+.form-group{margin-bottom:18px}
+.form-label{display:block;font-size:14px;font-weight:600;color:var(--text-mid);margin-bottom:7px;letter-spacing:.01em}
+.form-input{width:100%;padding:11px 14px;border:1.5px solid rgba(90,56,37,.15);border-radius:var(--radius);background:var(--surface);font-family:'Manrope',sans-serif;font-size:15px;color:var(--text-dark);outline:none;transition:border .18s,box-shadow .18s}
+.form-input:focus{border-color:var(--warm-brown);box-shadow:0 0 0 3px rgba(138,98,64,.1)}
+.form-input::placeholder{color:var(--text-faint)}
+.form-input.error{border-color:var(--chestnut-light)}
+.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.error-msg{font-size:12px;color:var(--chestnut-light);margin-top:4px;font-weight:500}
+.search-box{background:var(--cream2);border:1.5px solid rgba(90,56,37,.12);border-radius:var(--radius-lg);padding:18px;margin-bottom:26px}
+.search-box-title{font-size:14px;font-weight:700;color:var(--text-mid);margin-bottom:12px;display:flex;align-items:center;gap:7px;font-family:'Manrope',sans-serif}
+.mock-results{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+.mock-result{background:var(--surface);border:1.5px solid rgba(90,56,37,.1);border-radius:var(--radius);padding:11px;display:flex;gap:10px;cursor:pointer;transition:all .18s;text-align:left;width:100%}
+.mock-result:hover{border-color:var(--warm-brown);box-shadow:0 2px 8px rgba(43,33,24,.08)}
+.mock-result-img{width:38px;height:54px;object-fit:cover;border-radius:4px;background:var(--cream2);flex-shrink:0}
+.mock-result-info{min-width:0}
+.mock-result-title{font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:var(--text-dark)}
+.mock-result-sub{font-size:11px;color:var(--warm-brown);margin-top:2px}
+.rating-picker{display:flex;gap:7px;align-items:center}
+.rating-pip{width:38px;height:38px;border-radius:var(--radius);border:1.5px solid rgba(90,56,37,.15);background:var(--surface);font-size:14px;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center}
+.rating-pip.sel{background:var(--dark-brown);color:var(--cream);border-color:var(--dark-brown)}
+.rating-pip:hover{border-color:var(--warm-brown)}
+
+/* WISHLIST */
+.wish-list{display:flex;flex-direction:column;gap:12px}
+.wish-item{background:var(--surface);border:1.5px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);display:flex;gap:14px;padding:18px;transition:all .18s}
+.wish-item:hover{border-color:rgba(90,56,37,.2);box-shadow:0 3px 12px rgba(43,33,24,.07)}
+.wish-cover{width:54px;height:76px;object-fit:cover;border-radius:5px;background:var(--cream2);flex-shrink:0;cursor:pointer;box-shadow:2px 3px 10px rgba(43,33,24,.15)}
+.wish-info{flex:1;min-width:0;cursor:pointer}
+.wish-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--text-dark);line-height:1.3}
+.wish-author{font-size:13px;color:var(--warm-brown);margin-top:3px;font-weight:400}
+.wish-pub{font-size:12px;color:var(--text-faint);margin-top:2px}
+.wish-cat{display:inline-block;font-size:11px;font-weight:600;background:var(--cream2);color:var(--warm-brown);padding:3px 10px;border-radius:6px;margin-top:6px;letter-spacing:.03em}
+.wish-actions{display:flex;flex-direction:column;gap:7px;flex-shrink:0}
+.wish-act-btn{border:none;padding:8px 14px;border-radius:var(--radius);font-family:'Manrope',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:4px;letter-spacing:.02em}
+.wish-act-move{background:var(--olive-pale);color:var(--olive)}
+.wish-act-move:hover{background:var(--olive-light);color:#fff}
+.wish-act-remove{color:var(--chestnut);background:none}
+.wish-act-remove:hover{background:rgba(124,58,42,.08)}
+.wish-act-detail{background:var(--cream2);color:var(--text-mid);border:1px solid rgba(90,56,37,.12)}
+.wish-act-detail:hover{background:var(--cream3)}
+.wish-footer{background:var(--cream2);border:1.5px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);padding:16px;text-align:center;margin-top:20px;font-size:14px;color:var(--text-muted);font-weight:400}
+
+/* PUBLISHER GROUP */
+.publisher-group{margin-bottom:32px}
+.publisher-group-header{display:flex;align-items:center;gap:9px;padding:10px 16px;background:var(--cream2);border:1.5px solid rgba(90,56,37,.12);border-radius:var(--radius-lg);margin-bottom:14px}
+.publisher-group-icon{font-size:15px}
+.publisher-group-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--dark-brown);flex:1}
+.publisher-group-count{font-size:12px;font-weight:600;color:var(--text-faint);background:var(--surface);padding:3px 10px;border-radius:10px;border:1px solid rgba(90,56,37,.1)}
+.empty{text-align:center;padding:64px 20px}
+.empty-icon{font-size:38px;color:var(--sand);margin-bottom:14px}
+.empty-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--text-mid);margin-bottom:7px}
+.empty-sub{font-size:15px;color:var(--text-faint)}
+
+/* TOAST */
+#toast{position:fixed;bottom:28px;right:28px;background:var(--espresso);color:var(--cream);padding:12px 22px;border-radius:var(--radius-lg);font-size:15px;font-weight:500;opacity:0;transition:opacity .28s,transform .28s;pointer-events:none;z-index:999;transform:translateY(6px);box-shadow:0 4px 20px rgba(43,33,24,.3);border:1px solid rgba(255,255,255,.06)}
+#toast.show{opacity:1;transform:translateY(0)}
+
+/* MOBILE */
+@media(max-width:860px){
+  .sidebar{width:64px}
+  .sidebar-logo-text,.sidebar-logo-tagline,.nav-item span:not(.nav-item-icon),.sidebar-add-label{display:none}
+  .sidebar-logo{padding:20px 13px;justify-content:center}
+  .nav-item{padding:12px;justify-content:center;gap:0}
+  .sidebar-add{padding:12px;border-radius:var(--radius)}
+  .sidebar-add-icon{margin:0}
+  .content{margin-left:64px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .detail-wrap{grid-template-columns:1fr}
+  .hero h1{font-size:36px}
+  main{padding:20px 18px}
+  .form-grid-2{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:9px}
+  .book-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+  .hero h1{font-size:28px}
+}
+</style>
+
+<div id="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo" onclick="navigate('home')">
+      <div class="sidebar-logo-icon">📚</div>
+      <div>
+        <div class="sidebar-logo-text">kitaphane</div>
+        <div class="sidebar-logo-tagline">Özel Kütüphaneniz</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" id="nav-home" onclick="navigate('home')">
+        <span class="nav-item-icon">🏠</span>
+        <span>Ana Sayfa</span>
+      </button>
+      <button class="nav-item" id="nav-library" onclick="navigate('library')">
+        <span class="nav-item-icon">📖</span>
+        <span>Kütüphanem</span>
+      </button>
+      <button class="nav-item" id="nav-wishlist" onclick="navigate('wishlist')">
+        <span class="nav-item-icon">♥</span>
+        <span>İstek Listesi</span>
+      </button>
+    </nav>
+    <button class="sidebar-add" onclick="navigate('add')">
+      <span class="sidebar-add-icon">＋</span>
+      <span class="sidebar-add-label">Kitap Ekle</span>
+    </button>
+    <div class="sidebar-footer">kitaphane © 2024</div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+    <main id="main-content"></main>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+const STATUS_LABELS = {unread:'Okunmadı',reading:'Okunuyor',finished:'Okundu',paused:'Askıda',dropped:'Bırakıldı'};
+const STATUS_CLS    = {unread:'s-unread',reading:'s-reading',finished:'s-finished',paused:'s-paused',dropped:'s-dropped'};
+const LOC_LABELS    = {home:'Evde',office:'Ofiste',lent:'Ödünç verildi',storage:'Depoda',other:'Diğer'};
+const CATS = ['Roman','Klasikler','Fantastik','Bilimkurgu','Polisiye','Gerilim/Korku','Çizgi Roman','Kişisel Gelişim','Tarih','Felsefe','Psikoloji','Biyografi','Gezi','Bilim','Sağlık','Ekonomi'];
+
+const STORAGE_KEY = 'kitaphane_books_v1';
+
+const DEMO_BOOKS = [
+  {id:'1',title:'Suç ve Ceza',author:'Fyodor Dostoyevski',isbn:'9789750719387',publisher:'İş Bankası',publishYear:1866,pageCount:672,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8091016-L.jpg',description:'Rus edebiyatının başyapıtlarından biri. Raskolnikov\'un iç dünyasını ve suçluluk duygusunu eşsiz bir şekilde anlatan Dostoyevski, insanın karanlık yüzünü ustaca işler.',status:'finished',location:'home',personalNote:'İkinci kez okuyorum. Her seferinde farklı bir şey keşfediyorum.',rating:5,addedAt:'2024-01-15',finishedAt:'2024-02-20',inWishlist:false},
+  {id:'1b',title:'Suç ve Ceza',author:'Fyodor Dostoyevski',isbn:'9789750812345',publisher:'Can Yayınları',publishYear:1866,pageCount:704,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8226560-L.jpg',description:'Can Yayınları baskısı.',status:'unread',location:'home',addedAt:'2024-05-10',inWishlist:false},
+  {id:'2',title:'Sapiens',author:'Yuval Noah Harari',isbn:'9789750519284',publisher:'Kolektif Kitap',publishYear:2011,pageCount:512,category:'Tarih',coverUrl:'https://covers.openlibrary.org/b/id/8739161-L.jpg',description:'Homo sapiens\'in ortaya çıkışından günümüze insanlık tarihinin cesur ve kapsamlı bir yorumu.',status:'finished',location:'office',rating:4,addedAt:'2024-02-01',finishedAt:'2024-03-10',inWishlist:false},
+  {id:'3',title:'Dune',author:'Frank Herbert',isbn:'9780441013593',publisher:'Ace Books',publishYear:1965,pageCount:688,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8475307-L.jpg',description:'Arrakis gezegeninde geçen bu bilim kurgu efsanesi.',status:'reading',location:'home',personalNote:'Sayfa 300\'deyim. Paul\'un yolculuğu büyüleyici.',rating:5,addedAt:'2024-03-05',startedAt:'2024-04-01',inWishlist:false},
+  {id:'4',title:'Düşünceler',author:'Marcus Aurelius',isbn:'9789750726439',publisher:'İş Bankası',publishYear:180,pageCount:224,category:'Felsefe',coverUrl:'https://covers.openlibrary.org/b/id/12019385-L.jpg',description:'Roma İmparatoru Marcus Aurelius\'un kendisiyle kurduğu diyaloglardan oluşan bu eser, Stoacı felsefenin en saf biçimidir.',status:'finished',location:'home',personalNote:'Her sabah bir bölüm okuyorum.',rating:5,addedAt:'2023-11-10',finishedAt:'2024-01-05',inWishlist:false},
+  {id:'5',title:'Sıfır\'dan Bir\'e',author:'Peter Thiel',isbn:'9786055029371',publisher:'Optimist',publishYear:2014,pageCount:195,category:'Ekonomi',coverUrl:'https://covers.openlibrary.org/b/id/8226560-L.jpg',description:'PayPal kurucu ortağı Peter Thiel\'in startup dünyasına dair fikirleri.',status:'unread',location:'storage',addedAt:'2024-04-20',inWishlist:false},
+  {id:'6',title:'Bilinçdışının Psikolojisi',author:'Carl Gustav Jung',isbn:'9789750721731',publisher:'İş Bankası',publishYear:1912,pageCount:288,category:'Psikoloji',coverUrl:'https://covers.openlibrary.org/b/id/9256697-L.jpg',description:'Jung\'un psikanalitik teorisinin temel taşlarını oluşturan bu eser, bilinçdışı zihnin derinliklerini keşfeder.',status:'paused',location:'home',personalNote:'Orta kısımda takıldım, biraz zor.',rating:3,addedAt:'2024-02-14',startedAt:'2024-03-01',inWishlist:false},
+  {id:'7',title:'Kör Saatçi',author:'Richard Dawkins',isbn:'9789750722981',publisher:'TÜBİTAK',publishYear:1986,pageCount:376,category:'Bilim',coverUrl:'https://covers.openlibrary.org/b/id/8091017-L.jpg',description:'Dawkins, evrim teorisini olağanüstü bir açıklıkla anlatır.',status:'unread',location:'lent',personalNote:'Ahmet\'e ödünç verdim.',addedAt:'2024-01-08',inWishlist:false},
+  {id:'8',title:'Yüzyıllık Yalnızlık',author:'Gabriel García Márquez',isbn:'9789750718533',publisher:'Can Yayınları',publishYear:1967,pageCount:432,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/9255326-L.jpg',description:'Büyülü gerçekçiliğin şaheseri.',status:'finished',location:'home',rating:5,addedAt:'2023-09-01',finishedAt:'2023-10-15',inWishlist:false},
+  {id:'w1',title:'Gece Yarısı Kütüphanesi',author:'Matt Haig',isbn:'9786051881867',publisher:'Domingo',publishYear:2020,pageCount:304,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/10519040-L.jpg',description:'Nora Seed, ölümle hayat arasındaki kütüphanede kendini bulur.',status:'unread',location:'other',addedAt:'2024-04-10',inWishlist:true},
+  {id:'w2',title:'Atomik Alışkanlıklar',author:'James Clear',isbn:'9786052415337',publisher:'Sola Unitas',publishYear:2018,pageCount:320,category:'Psikoloji',coverUrl:'https://covers.openlibrary.org/b/id/12004289-L.jpg',description:'Küçük değişimlerin nasıl büyük sonuçlar doğurduğunu anlatan kitap.',status:'unread',location:'other',addedAt:'2024-04-15',inWishlist:true},
+  {id:'w3',title:'The Pragmatic Programmer',author:'David Thomas',isbn:'9780135957059',publisher:'Addison-Wesley',publishYear:2019,pageCount:352,category:'Teknoloji',coverUrl:'https://covers.openlibrary.org/b/id/9327787-L.jpg',description:'Yazılım geliştirmenin felsefesini ve pratik ipuçlarını sunan bu klasik.',status:'unread',location:'other',addedAt:'2024-05-01',inWishlist:true},
+];
+
+function loadBooks(){
+  try{
+    const saved=localStorage.getItem(STORAGE_KEY);
+    if(saved){return JSON.parse(saved);}
+  }catch(e){}
+  return DEMO_BOOKS;
+}
+
+function saveBooks(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(books));}catch(e){}
+}
+
+let books = loadBooks();
+
+let currentPage='home',currentBookId=null,viewMode='grid',searchQ='',filters={category:'',status:'',location:'',publisher:'',author:''},editForm=null;
+
+function getBook(id){return books.find(b=>b.id===id)}
+function library(){return books.filter(b=>!b.inWishlist)}
+function wishlist(){return books.filter(b=>b.inWishlist)}
+function stats(){const lib=library();return{total:lib.length,finished:lib.filter(b=>b.status==='finished').length,reading:lib.filter(b=>b.status==='reading').length,wishlist:wishlist().length}}
+
+function filtered(){
+  return library().filter(b=>{
+    if(searchQ){const q=searchQ.toLowerCase();if(!b.title.toLowerCase().includes(q)&&!b.author.toLowerCase().includes(q)&&!(b.isbn||'').toLowerCase().includes(q)&&!(b.publisher||'').toLowerCase().includes(q))return false}
+    if(filters.category&&b.category!==filters.category)return false;
+    if(filters.status&&b.status!==filters.status)return false;
+    if(filters.location&&b.location!==filters.location)return false;
+    if(filters.publisher&&(b.publisher||'')!==filters.publisher)return false;
+    if(filters.author&&b.author!==filters.author)return false;
+    return true;
+  });
+}
+
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2400)}
+
+function navigate(page,bookId){
+  currentPage=page;currentBookId=bookId||null;
+  ['home','library','wishlist'].forEach(p=>{const btn=document.getElementById('nav-'+p);if(btn)btn.classList.toggle('active',p===page)});
+  render();
+}
+
+function esc(str){return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function renderHome(){
+  const s=stats();
+  const reading=library().filter(b=>b.status==='reading');
+  const recent=[...library()].sort((a,b)=>b.addedAt.localeCompare(a.addedAt)).slice(0,4);
+  const topRated=[...library()].filter(b=>b.rating===5).slice(0,3);
+  let html=`
+  <div class="hero">
+    <h1>Dijital<br><em>kütüphaneniz</em>.</h1>
+    <p>Kitaplarınızı takip edin, notlar alın, okuma yolculuğunuzu keşfedin.</p>
+  </div>
+  <div class="stats-grid">
+    ${[['📚','Toplam Kitap',s.total,'background:var(--dark-brown);color:var(--cream)'],
+       ['✓','Okundu',s.finished,'background:var(--olive);color:#fff'],
+       ['◎','Okunuyor',s.reading,'background:var(--chestnut);color:#fff'],
+       ['♥','İstek Listesi',s.wishlist,'background:var(--warm-brown);color:#fff']]
+       .map(([icon,label,val,style])=>`<div class="stat-card"><div class="stat-icon" style="${style}">${icon}</div><div class="stat-num">${val}</div><div class="stat-label">${label}</div></div>`).join('')}
+  </div>`;
+  if(reading.length){
+    html+=`<div style="margin-bottom:32px"><div class="section-header"><h2 class="section-title">Şu an okunanlar</h2></div><div class="reading-strip">
+    ${reading.map(b=>`<div class="reading-item" onclick="navigate('detail','${b.id}')">
+      ${b.coverUrl?`<img src="${b.coverUrl}" class="reading-cover" onerror="this.style.display='none'" alt="">`:`<div class="reading-cover" style="display:flex;align-items:center;justify-content:center;font-size:18px;border-radius:3px;background:var(--cream2)">📖</div>`}
+      <div class="reading-info"><div class="reading-title">${esc(b.title)}</div><div class="reading-author">${esc(b.author)}</div>${b.personalNote?`<div class="reading-note">"${esc(b.personalNote)}"</div>`:''}</div>
+      <div class="arrow">›</div></div>`).join('')}
+    </div></div>`;
+  }
+  html+=`<div style="margin-bottom:32px"><div class="section-header"><h2 class="section-title">Son eklenenler</h2><button class="see-all" onclick="navigate('library')">Tümünü Gör →</button></div><div class="book-grid">${recent.map(b=>bookCard(b)).join('')}</div></div>`;
+  if(topRated.length){
+    html+=`<div><div class="section-header"><h2 class="section-title">En çok beğenilenler</h2></div><div class="rated-grid">
+    ${topRated.map(b=>`<div class="rated-item" onclick="navigate('detail','${b.id}')">
+      ${b.coverUrl?`<img src="${b.coverUrl}" class="rated-cover" onerror="this.style.display='none'" alt="">`:`<div class="rated-cover" style="display:flex;align-items:center;justify-content:center;background:var(--cream2);border-radius:3px">📖</div>`}
+      <div><div class="rated-title">${esc(b.title)}</div><div class="rated-author">${esc(b.author)}</div><div class="rated-stars">${'⭐'.repeat(b.rating||0)}</div></div>
+    </div>`).join('')}
+    </div></div>`;
+  }
+  return html;
+}
+
+function bookCard(b){
+  return `<div class="book-card">
+    <div class="book-cover" onclick="navigate('detail','${b.id}')">
+      ${b.coverUrl?`<img src="${b.coverUrl}" onerror="this.style.display='none'" alt="">`:''}
+      ${!b.coverUrl?`<div class="cover-placeholder"><div class="cover-placeholder-icon">📖</div><div class="cover-placeholder-text">${esc(b.title)}</div></div>`:''}
+      <span class="status-badge ${STATUS_CLS[b.status]}">${STATUS_LABELS[b.status]}</span>
+      ${b.rating?`<span class="rating-badge">★ ${b.rating}</span>`:''}
+    </div>
+    <button class="wish-btn ${b.inWishlist?'wishlisted':''}" onclick="toggleWish('${b.id}')">${b.inWishlist?'♥':'♡'}</button>
+    <div class="book-info" onclick="navigate('detail','${b.id}')">
+      <div class="book-title">${esc(b.title)}</div>
+      <div class="book-author">${esc(b.author)}</div>
+      ${b.location?`<div class="book-location">📍 ${LOC_LABELS[b.location]}</div>`:''}
+    </div>
+  </div>`;
+}
+
+function renderLibrary(){
+  const res=filtered();
+  const lib=library();
+  // Build dynamic publisher and author lists from all library books
+  const publishers=[...new Set(lib.map(b=>b.publisher).filter(Boolean))].sort();
+  const authors=[...new Set(lib.map(b=>b.author).filter(Boolean))].sort();
+  const anyFilter=filters.category||filters.status||filters.location||filters.publisher||filters.author;
+
+  // Determine if we should show publisher-grouped view:
+  // Only when searching by title and there are multiple books with the SAME title from DIFFERENT publishers
+  const titleMatchedBooks = searchQ
+    ? (() => {
+        const q = searchQ.toLowerCase();
+        // Find books whose title matches the search (not just author/isbn/publisher)
+        const titleMatches = res.filter(b => b.title.toLowerCase().includes(q));
+        // Check if there are multiple distinct publishers among title-matched books
+        const distinctPublishers = new Set(titleMatches.map(b => b.publisher || 'Yayınevi Bilinmiyor'));
+        return titleMatches.length > 1 && distinctPublishers.size > 1 ? titleMatches : null;
+      })()
+    : null;
+  const showGrouped = !!titleMatchedBooks && !filters.publisher;
+  let resultsHtml='';
+  if(res.length===0){
+    resultsHtml=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Sonuç bulunamadı</div><div class="empty-sub">Arama kriterlerinizi değiştirin.</div></div>`;
+  } else if(showGrouped){
+    // Group title-matched books by publisher
+    const grouped={};
+    titleMatchedBooks.forEach(b=>{
+      const pub=b.publisher||'Yayınevi Bilinmiyor';
+      if(!grouped[pub])grouped[pub]=[];
+      grouped[pub].push(b);
+    });
+    const pubs=Object.keys(grouped).sort();
+    const titleMatchedIds = new Set(titleMatchedBooks.map(b=>b.id));
+    // Other results (author/isbn matches that didn't match by title)
+    const otherRes = res.filter(b=>!titleMatchedIds.has(b.id));
+
+    const groupedHtml = pubs.map(pub=>`
+      <div class="publisher-group">
+        <div class="publisher-group-header">
+          <span class="publisher-group-icon">🏛</span>
+          <span class="publisher-group-name">${esc(pub)}</span>
+          <span class="publisher-group-count">${grouped[pub].length} kitap</span>
+        </div>
+        ${viewMode==='grid'
+          ?`<div class="book-grid">${grouped[pub].map(b=>bookCard(b)).join('')}</div>`
+          :renderListView(grouped[pub])}
+      </div>`).join('');
+
+    const otherHtml = otherRes.length
+      ? `<div style="margin-top:10px;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--text-faint);letter-spacing:.06em;text-transform:uppercase">Diğer Sonuçlar</div>
+         ${viewMode==='grid'
+           ?`<div class="book-grid">${otherRes.map(b=>bookCard(b)).join('')}</div>`
+           :renderListView(otherRes)}`
+      : '';
+
+    resultsHtml = groupedHtml + otherHtml;
+  } else {
+    resultsHtml = viewMode==='grid'
+      ?`<div class="book-grid">${res.map(b=>bookCard(b)).join('')}</div>`
+      :renderListView(res);
+  }
+
+  return `
+  <div class="section-header" style="margin-bottom:18px">
+    <div><h1 class="section-title" style="font-size:30px">Kütüphanem</h1>
+    <div style="font-size:13px;color:var(--text-faint);margin-top:3px;font-weight:500">${lib.length} kitap · ${res.length} sonuç</div></div>
+  </div>
+  <div class="search-row">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input id="lib-search" type="text" value="${esc(searchQ)}" placeholder="Kitap adı, yazar, ISBN, yayınevi..." oninput="searchQ=this.value;renderPage()">
+      ${searchQ?`<button class="search-clear" onclick="searchQ='';document.getElementById('lib-search').value='';renderPage()">×</button>`:''}
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn ${viewMode==='grid'?'active':''}" onclick="viewMode='grid';renderPage()" title="Grid">⊞</button>
+      <button class="view-btn ${viewMode==='list'?'active':''}" onclick="viewMode='list';renderPage()" title="Liste">☰</button>
+    </div>
+  </div>
+  <div class="filter-row">
+    <select class="filter-select ${filters.category?'has-value':''}" onchange="filters.category=this.value;renderPage()">
+      <option value="">Kategori</option>${CATS.map(c=>`<option value="${c}" ${filters.category===c?'selected':''}>${c}</option>`).join('')}
+    </select>
+    <select class="filter-select ${filters.status?'has-value':''}" onchange="filters.status=this.value;renderPage()">
+      <option value="">Durum</option>${Object.entries(STATUS_LABELS).map(([v,l])=>`<option value="${v}" ${filters.status===v?'selected':''}>${l}</option>`).join('')}
+    </select>
+    <select class="filter-select ${filters.location?'has-value':''}" onchange="filters.location=this.value;renderPage()">
+      <option value="">Konum</option>${Object.entries(LOC_LABELS).map(([v,l])=>`<option value="${v}" ${filters.location===v?'selected':''}>${l}</option>`).join('')}
+    </select>
+    <select class="filter-select ${filters.publisher?'has-value':''}" onchange="filters.publisher=this.value;renderPage()">
+      <option value="">Yayınevi</option>${publishers.map(p=>`<option value="${esc(p)}" ${filters.publisher===p?'selected':''}>${esc(p)}</option>`).join('')}
+    </select>
+    <select class="filter-select ${filters.author?'has-value':''}" onchange="filters.author=this.value;renderPage()">
+      <option value="">Yazar</option>${authors.map(a=>`<option value="${esc(a)}" ${filters.author===a?'selected':''}>${esc(a)}</option>`).join('')}
+    </select>
+    ${anyFilter?`<button class="filter-select" style="cursor:pointer;color:var(--chestnut);border-color:rgba(124,58,42,.25)" onclick="filters={category:'',status:'',location:'',publisher:'',author:''};renderPage()">× Temizle</button>`:''}
+  </div>
+  ${resultsHtml}`;
+}
+
+function renderListView(items){
+  return `<div class="book-list">${items.map(b=>`
+    <div class="book-list-item" onclick="navigate('detail','${b.id}')">
+      ${b.coverUrl?`<img src="${b.coverUrl}" class="list-cover" onerror="this.style.display='none'" alt="">`:`<div class="list-cover" style="display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--cream2);border-radius:5px">📖</div>`}
+      <div class="list-info"><div class="list-title">${esc(b.title)}</div><div class="list-author">${esc(b.author)}</div></div>
+      <div class="list-meta">
+        <span class="status-badge ${STATUS_CLS[b.status]}" style="position:static">${STATUS_LABELS[b.status]}</span>
+        <span class="list-location">📍 ${LOC_LABELS[b.location]}</span>
+        ${b.category?`<span style="font-size:11px;font-weight:500;background:var(--cream2);padding:3px 10px;border-radius:6px;color:var(--warm-brown)">${b.category}</span>`:''}
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+function renderDetail(){
+  const b=getBook(currentBookId);
+  if(!b)return`<div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">Kitap bulunamadı</div></div>`;
+  return `
+  <button class="back-btn" onclick="navigate('library')">← Kütüphaneye dön</button>
+  <div class="detail-wrap">
+    <div>
+      ${b.coverUrl?`<img src="${b.coverUrl}" class="detail-cover" onerror="this.style.display='none'" alt="">`:`<div class="detail-cover-placeholder"><span style="font-size:32px">📖</span><span style="font-family:'Playfair Display',serif;font-size:12px;color:var(--text-faint);text-align:center;font-style:italic">${esc(b.title)}</span></div>`}
+      <div class="detail-actions" style="margin-top:14px">
+        <button class="btn btn-primary" onclick="navigate('edit','${b.id}')">✏️ Kitabı Düzenle</button>
+        <button class="btn btn-ghost btn-wish ${b.inWishlist?'wishlisted':''}" onclick="toggleWish('${b.id}');renderPage()">${b.inWishlist?'♥ Listede':'♡ Okuma Listeme Al'}</button>
+        <button class="btn btn-ghost btn-danger" onclick="deleteBook('${b.id}')">🗑 Sil</button>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:6px">
+        <h1 class="detail-title" style="flex:1">${esc(b.title)}</h1>
+        <span class="detail-status status-badge ${STATUS_CLS[b.status]}" style="position:static;margin-top:6px">${STATUS_LABELS[b.status]}</span>
+      </div>
+      <div class="detail-author">${esc(b.author)}</div>
+      ${b.rating?`<div class="stars">${Array.from({length:5}).map((_,i)=>`<span class="star" style="color:${i<b.rating?'var(--gold)':'var(--sand)'}">${i<b.rating?'★':'☆'}</span>`).join('')}<span style="font-size:13px;color:var(--text-faint);margin-left:5px;font-weight:500">${b.rating}/5</span></div>`:''}
+      <div class="meta-grid">
+        ${[['📍','Konum',LOC_LABELS[b.location]],['📂','Kategori',b.category],['🏛','Yayınevi',b.publisher],['📅','Yayın Yılı',b.publishYear],['📄','Sayfa',b.pageCount?b.pageCount+' sayfa':null],['#','ISBN',b.isbn]]
+          .filter(([,,v])=>v).map(([icon,label,val])=>`<div class="meta-item"><div class="meta-label">${icon} ${label}</div><div class="meta-value">${esc(val)}</div></div>`).join('')}
+      </div>
+      ${b.addedAt?`<div style="font-size:12px;color:var(--text-faint);margin-bottom:14px;font-weight:400">Eklendi: ${b.addedAt}${b.startedAt?' · Başlandı: '+b.startedAt:''}${b.finishedAt?' · Bitirildi: '+b.finishedAt:''}</div>`:''}
+      ${b.description?`<div><h2 style="font-family:'Playfair Display',serif;font-size:16px;color:var(--text-dark);margin-bottom:7px;font-weight:600">Hakkında</h2><p class="desc-text">${esc(b.description)}</p></div>`:''}
+      ${b.personalNote?`<div class="personal-note"><div class="note-label">Kişisel Notum</div><div class="note-text">"${esc(b.personalNote)}"</div></div>`:''}
+    </div>
+  </div>`;
+}
+
+const MOCK_RESULTS=[
+  {title:'Dune Mesih',author:'Frank Herbert',isbn:'9786055029715',publisher:'İthaki',publishYear:1969,pageCount:304,coverUrl:'https://covers.openlibrary.org/b/id/8091016-L.jpg'},
+  {title:'Küçük Prens',author:'Antoine de Saint-Exupéry',isbn:'9789750719431',publisher:'Can Yayınları',publishYear:1943,pageCount:96,coverUrl:'https://covers.openlibrary.org/b/id/8226560-L.jpg'},
+];
+
+function renderAddEdit(){
+  const isEdit=currentPage==='edit';
+  const b=isEdit?getBook(currentBookId):null;
+  const f=editForm||(isEdit&&b?{...b}:{title:'',author:'',isbn:'',publisher:'',publishYear:'',pageCount:'',category:'',coverUrl:'',description:'',language:'Türkçe',status:'unread',location:'home',personalNote:'',rating:0,inWishlist:false});
+  if(!editForm)editForm=f;
+  return `
+  <button class="back-btn" onclick="editForm=null;navigate(${isEdit?`'detail','${currentBookId}'`:"'library'"})">← ${isEdit?'Detaya dön':'Kütüphaneye dön'}</button>
+  <h1 class="section-title" style="font-size:30px;margin-bottom:26px">${isEdit?'Kitabı Düzenle':'Koleksiyona Kitap Ekle'}</h1>
+  <div class="form-wrap">
+  ${!isEdit?`<div class="search-box"><div class="search-box-title">🔍 Google Books ile Ara</div>
+    <div style="display:flex;gap:8px"><input id="gbooks-q" type="text" class="form-input" placeholder="Kitap adı, yazar veya ISBN..." style="flex:1" onkeydown="if(event.key==='Enter')doGSearch()"><button class="btn btn-primary" onclick="doGSearch()">Ara</button></div>
+    <div id="gsearch-results"></div></div>`:''}
+  <div class="form-section-title">Kitap Bilgileri</div>
+  <div class="form-group">
+    <label class="form-label">Kitap Adı <span style="color:var(--chestnut-light)">*</span></label>
+    <input type="text" class="form-input" id="f-title" value="${esc(f.title)}" placeholder="Kitap adını girin" oninput="editForm.title=this.value">
+    <div id="err-title" class="error-msg" style="display:none">Kitap adı gerekli</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Yazar <span style="color:var(--chestnut-light)">*</span></label>
+    <input type="text" class="form-input" id="f-author" value="${esc(f.author)}" placeholder="Yazar adını girin" oninput="editForm.author=this.value">
+    <div id="err-author" class="error-msg" style="display:none">Yazar adı gerekli</div>
+  </div>
+  <div class="form-group"><label class="form-label">Açıklama</label><textarea class="form-input" rows="3" style="resize:none;line-height:1.6" placeholder="Kitap hakkında kısa bilgi..." oninput="editForm.description=this.value">${esc(f.description||'')}</textarea></div>
+  <div class="form-grid-2">
+    <div class="form-group"><label class="form-label">ISBN</label><input type="text" class="form-input" value="${esc(f.isbn||'')}" placeholder="9780..." oninput="editForm.isbn=this.value"></div>
+    <div class="form-group"><label class="form-label">Yayınevi</label><input type="text" class="form-input" value="${esc(f.publisher||'')}" placeholder="Yayınevi adı" oninput="editForm.publisher=this.value"></div>
+    <div class="form-group"><label class="form-label">Yayın Yılı</label><input type="number" class="form-input" value="${f.publishYear||''}" placeholder="2024" oninput="editForm.publishYear=+this.value||''"></div>
+    <div class="form-group"><label class="form-label">Sayfa Sayısı</label><input type="number" class="form-input" value="${f.pageCount||''}" placeholder="300" oninput="editForm.pageCount=+this.value||''"></div>
+    <div class="form-group"><label class="form-label">Kategori</label><select class="form-input" onchange="editForm.category=this.value"><option value="">Seçin...</option>${CATS.map(c=>`<option value="${c}" ${f.category===c?'selected':''}>${c}</option>`).join('')}</select></div>
+    <div class="form-group"><label class="form-label">Dil</label><select class="form-input" onchange="editForm.language=this.value">${['Türkçe','İngilizce','Almanca','Fransızca','İspanyolca','Diğer'].map(l=>`<option ${(f.language||'Türkçe')===l?'selected':''}>${l}</option>`).join('')}</select></div>
+  </div>
+  <div class="form-group"><label class="form-label">Kapak Görseli URL</label><input type="url" class="form-input" value="${esc(f.coverUrl||'')}" placeholder="https://..." oninput="editForm.coverUrl=this.value"></div>
+  <div class="form-section-title" style="margin-top:22px">Kütüphane Bilgileri</div>
+  <div class="form-grid-2">
+    <div class="form-group"><label class="form-label">Okuma Durumu</label><select class="form-input" onchange="editForm.status=this.value">${Object.entries(STATUS_LABELS).map(([v,l])=>`<option value="${v}" ${f.status===v?'selected':''}>${l}</option>`).join('')}</select></div>
+    <div class="form-group"><label class="form-label">Konum</label><select class="form-input" onchange="editForm.location=this.value">${Object.entries(LOC_LABELS).map(([v,l])=>`<option value="${v}" ${f.location===v?'selected':''}>${l}</option>`).join('')}</select></div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Puanım <span style="color:var(--text-faint);font-weight:400">(opsiyonel)</span></label>
+    <div class="rating-picker">
+      ${[1,2,3,4,5].map(n=>`<button type="button" class="rating-pip ${(f.rating||0)>=n?'sel':''}" onclick="editForm.rating=editForm.rating===${n}?0:${n};renderPage()">${n}</button>`).join('')}
+      ${f.rating?`<button type="button" onclick="editForm.rating=0;renderPage()" style="background:none;border:none;font-size:12px;color:var(--text-faint);cursor:pointer;font-family:'Manrope',sans-serif">Temizle</button>`:''}
+    </div>
+  </div>
+  <div class="form-group"><label class="form-label">Kişisel Not</label><textarea class="form-input" rows="3" style="resize:none;line-height:1.6" placeholder="Bu kitap hakkında notlarınız..." oninput="editForm.personalNote=this.value">${esc(f.personalNote||'')}</textarea></div>
+  <div style="display:flex;gap:10px;margin-top:10px">
+    <button class="btn btn-primary" style="flex:1;padding:13px" onclick="submitForm(${isEdit?`'${currentBookId}'`:'null'})">${isEdit?'Değişiklikleri Kaydet':'Koleksiyona Ekle'}</button>
+    <button class="btn btn-ghost" style="padding:13px 24px" onclick="editForm=null;navigate(${isEdit?`'detail','${currentBookId}'`:"'library'"})">İptal</button>
+  </div></div>`;
+}
+
+function renderWishlist(){
+  const wl=wishlist();
+  const totalPages=wl.reduce((a,b)=>a+(b.pageCount||0),0);
+  return `
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:10px">
+    <div><h1 class="section-title" style="font-size:30px">♥ İstek Listesi</h1>
+    <div style="font-size:13px;color:var(--text-faint);margin-top:4px;font-weight:500">${wl.length} kitap · Okumayı beklediğiniz kitaplar</div></div>
+  </div>
+  ${wl.length===0?`<div class="empty"><div class="empty-icon">♥</div><div class="empty-title">İstek listeniz boş</div><div class="empty-sub">Okumak istediğiniz kitapları buraya ekleyin.</div></div>`:`
+  <div class="wish-list">
+    ${wl.map(b=>`<div class="wish-item">
+      <div onclick="navigate('detail','${b.id}')">
+        ${b.coverUrl?`<img src="${b.coverUrl}" class="wish-cover" onerror="this.style.display='none'" alt="">`:`<div class="wish-cover" style="display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--cream2);border-radius:5px">📖</div>`}
+      </div>
+      <div class="wish-info" onclick="navigate('detail','${b.id}')">
+        <div class="wish-title">${esc(b.title)}</div>
+        <div class="wish-author">${esc(b.author)}</div>
+        ${b.publisher?`<div class="wish-pub">${esc(b.publisher)}${b.publishYear?' · '+b.publishYear:''}</div>`:''}
+        ${b.category?`<span class="wish-cat">${b.category}</span>`:''}
+      </div>
+      <div class="wish-actions">
+        <button class="wish-act-btn wish-act-move" onclick="moveToLibrary('${b.id}')">📚 Kütüphaneye Ekle</button>
+        <button class="wish-act-btn wish-act-detail" onclick="navigate('detail','${b.id}')">Detayları Gör →</button>
+        <button class="wish-act-btn wish-act-remove" onclick="toggleWish('${b.id}')">× Çıkar</button>
+      </div>
+    </div>`).join('')}
+  </div>
+  ${totalPages>0?`<div class="wish-footer"><strong>${wl.length}</strong> kitap okumayı bekliyorsunuz — toplam yaklaşık <strong>${totalPages.toLocaleString()}</strong> sayfa.</div>`:''}`}`;
+}
+
+function toggleWish(id){const b=getBook(id);if(!b)return;b.inWishlist=!b.inWishlist;saveBooks();toast(b.inWishlist?'İstek listesine eklendi':'İstek listesinden çıkarıldı');renderPage()}
+function moveToLibrary(id){const b=getBook(id);if(!b)return;b.inWishlist=false;saveBooks();toast(`"${b.title}" kütüphaneye eklendi`);renderPage()}
+function deleteBook(id){const b=getBook(id);if(!b)return;if(!confirm(`"${b.title}" kitabını silmek istiyor musunuz?`))return;books=books.filter(x=>x.id!==id);saveBooks();toast('Kitap silindi');navigate('library')}
+
+function doGSearch(){
+  const q=document.getElementById('gbooks-q')?.value?.trim();if(!q)return;
+  const el=document.getElementById('gsearch-results');if(!el)return;
+  el.innerHTML='<div style="text-align:center;padding:12px;font-size:13px;color:var(--text-faint)">Aranıyor...</div>';
+  setTimeout(()=>{
+    el.innerHTML=`<div class="mock-results">${MOCK_RESULTS.map((r,i)=>`
+    <button class="mock-result" onclick="applyGResult(${i})">
+      <img src="${r.coverUrl}" class="mock-result-img" onerror="this.style.display='none'" alt="">
+      <div class="mock-result-info"><div class="mock-result-title">${esc(r.title)}</div><div class="mock-result-sub">${esc(r.author)} · ${r.publisher}</div><div class="mock-result-sub">ISBN: ${r.isbn} · ${r.publishYear}</div></div>
+    </button>`).join('')}
+    <div style="font-size:12px;color:var(--text-faint);text-align:center;margin-top:5px">Bir sonucu seçerek formu doldurun</div></div>`;
+  },600);
+}
+
+function applyGResult(i){const r=MOCK_RESULTS[i];editForm={...editForm,...r,status:editForm.status||'unread',location:editForm.location||'home',inWishlist:false};renderPage();toast('Bilgiler forma aktarıldı')}
+
+function submitForm(editId){
+  if(!editForm.title){document.getElementById('err-title').style.display='block';document.getElementById('f-title').classList.add('error');return}
+  if(!editForm.author){document.getElementById('err-author').style.display='block';document.getElementById('f-author').classList.add('error');return}
+  if(editId){const idx=books.findIndex(b=>b.id===editId);if(idx!==-1)books[idx]={...books[idx],...editForm};saveBooks();toast('Değişiklikler kaydedildi');editForm=null;navigate('detail',editId)}
+  else{const newBook={...editForm,id:'book-'+Date.now(),addedAt:new Date().toISOString().split('T')[0]};books.push(newBook);saveBooks();toast('Kitap koleksiyona eklendi');editForm=null;navigate('detail',newBook.id)}
+}
+
+function renderPage(){
+  const el=document.getElementById('main-content');
+  if(currentPage==='home')el.innerHTML=renderHome();
+  else if(currentPage==='library')el.innerHTML=renderLibrary();
+  else if(currentPage==='detail')el.innerHTML=renderDetail();
+  else if(currentPage==='add'||currentPage==='edit')el.innerHTML=renderAddEdit();
+  else if(currentPage==='wishlist')el.innerHTML=renderWishlist();
+}
+
+function render(){renderPage()}
+render();
+</script>
+</body>
+</html>
