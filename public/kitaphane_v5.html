@@ -507,12 +507,12 @@ function renderLibrary(){
   return `
   <div class="section-header" style="margin-bottom:18px">
     <div><h1 class="section-title" style="font-size:30px">Kütüphanem</h1>
-    <div style="font-size:13px;color:var(--text-faint);margin-top:3px;font-weight:500" id="lib-count">${lib.length} kitap · ${res.length} sonuç</div></div>
+    <div style="font-size:13px;color:var(--text-faint);margin-top:3px;font-weight:500">${lib.length} kitap · ${res.length} sonuç</div></div>
   </div>
   <div class="search-row">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input id="lib-search" type="text" value="${esc(searchQ)}" placeholder="Kitap adı, yazar, ISBN, yayınevi..." oninput="searchQ=this.value;renderLibraryResults()">
+      <input id="lib-search" type="text" value="${esc(searchQ)}" placeholder="Kitap adı, yazar, ISBN, yayınevi..." oninput="searchQ=this.value;renderPage()">
       ${searchQ?`<button class="search-clear" onclick="searchQ='';document.getElementById('lib-search').value='';renderPage()">×</button>`:''}
     </div>
     <div class="view-toggle">
@@ -538,7 +538,7 @@ function renderLibrary(){
     </select>
     ${anyFilter?`<button class="filter-select" style="cursor:pointer;color:var(--chestnut);border-color:rgba(124,58,42,.25)" onclick="filters={category:'',status:'',location:'',publisher:'',author:''};renderPage()">× Temizle</button>`:''}
   </div>
-  <div id="lib-results">${resultsHtml}</div>`;
+  ${resultsHtml}`;
 }
 
 function renderListView(items){
@@ -782,7 +782,6 @@ function submitForm(editId){
   else{const newBook={...editForm,id:'book-'+Date.now(),addedAt:new Date().toISOString().split('T')[0]};books.push(newBook);saveBooks();toast('Kitap koleksiyona eklendi');editForm=null;navigate('detail',newBook.id)}
 }
 
-function renderLibraryResults(){const el=document.getElementById("lib-results");if(el){const res=filtered();const lib=library();const titleMatchedBooks=searchQ?(()=>{const q=searchQ.toLowerCase();const titleMatches=res.filter(b=>b.title.toLowerCase().includes(q));const distinctPublishers=new Set(titleMatches.map(b=>b.publisher||"Yayınevi Bilinmiyor"));return titleMatches.length>1&&distinctPublishers.size>1?titleMatches:null;})():null;const showGrouped=!!titleMatchedBooks&&!filters.publisher;let html="";if(res.length===0){html=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Sonuç bulunamadı</div></div>`;}else if(showGrouped){const grouped={};titleMatchedBooks.forEach(b=>{const pub=b.publisher||"Yayınevi Bilinmiyor";if(!grouped[pub])grouped[pub]=[];grouped[pub].push(b);});html=Object.keys(grouped).sort().map(pub=>`<div class="publisher-group"><div class="publisher-group-header"><span class="publisher-group-icon">🏛</span><span class="publisher-group-name">${esc(pub)}</span><span class="publisher-group-count">${grouped[pub].length} kitap</span></div><div class="book-grid">${grouped[pub].map(b=>bookCard(b)).join("")}</div></div>`).join("");}else{html=viewMode==="grid"?`<div class="book-grid">${res.map(b=>bookCard(b)).join("")}</div>`:renderListView(res);}el.innerHTML=html;const c=document.getElementById("lib-count");if(c)c.textContent=`${lib.length} kitap · ${res.length} sonuç`;}}
 function renderPage(){
   const el=document.getElementById('main-content');
   if(currentPage==='home')el.innerHTML=renderHome();
