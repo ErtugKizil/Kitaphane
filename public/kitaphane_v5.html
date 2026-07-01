@@ -507,13 +507,13 @@ function renderLibrary(){
   return `
   <div class="section-header" style="margin-bottom:18px">
     <div><h1 class="section-title" style="font-size:30px">Kütüphanem</h1>
-    <div style="font-size:13px;color:var(--text-faint);margin-top:3px;font-weight:500">${lib.length} kitap · ${res.length} sonuç</div></div>
+    <div id="lib-count" style="font-size:13px;color:var(--text-faint);margin-top:3px;font-weight:500">${lib.length} kitap · ${res.length} sonuç</div></div>
   </div>
   <div class="search-row">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input id="lib-search" type="text" value="${esc(searchQ)}" placeholder="Kitap adı, yazar, ISBN, yayınevi..." oninput="searchQ=this.value;renderPage()">
-      ${searchQ?`<button class="search-clear" onclick="searchQ='';document.getElementById('lib-search').value='';renderPage()">×</button>`:''}
+      <input id="lib-search" type="text" value="${esc(searchQ)}" placeholder="Kitap adı, yazar, ISBN, yayınevi..." oninput="searchQ=this.value;renderLibraryResults()">
+      ${searchQ?`<button class="search-clear" onclick="searchQ='';document.getElementById('lib-search').value='';renderLibraryResults()">×</button>`:''}
     </div>
     <div class="view-toggle">
       <button class="view-btn ${viewMode==='grid'?'active':''}" onclick="viewMode='grid';renderPage()">⊞</button>
@@ -538,7 +538,7 @@ function renderLibrary(){
     </select>
     ${anyFilter?`<button class="filter-select" style="cursor:pointer;color:var(--chestnut);border-color:rgba(124,58,42,.25)" onclick="filters={category:'',status:'',location:'',publisher:'',author:''};renderPage()">× Temizle</button>`:''}
   </div>
-  ${resultsHtml}`;
+  <div id="lib-results">${resultsHtml}</div>`;
 }
 
 function renderListView(items){
@@ -621,12 +621,12 @@ async function doGSearch(){
     }
 
     // Sonuçları sakla (applyGResult için)
+    const searchTerm = q.toLowerCase();
     gSearchResults = data.items.map(item => {
       const info = item.volumeInfo || {};
       const isbn13 = (info.industryIdentifiers || []).find(x => x.type === 'ISBN_13');
       const isbn10 = (info.industryIdentifiers || []).find(x => x.type === 'ISBN_10');
       const isbn = (isbn13 || isbn10 || {}).identifier || '';
-      // Kapak URL — HTTPS'e çevir
       const rawCover = (info.imageLinks || {}).thumbnail || (info.imageLinks || {}).smallThumbnail || '';
       const coverUrl = rawCover.replace('http://', 'https://');
       return {
@@ -641,20 +641,49 @@ async function doGSearch(){
         category: (info.categories || [])[0] || '',
         language: info.language === 'tr' ? 'Türkçe' : info.language === 'en' ? 'İngilizce' : info.language || 'Diğer',
       };
+    }).filter(r => r.title.toLowerCase().includes(searchTerm)); // Kural 1: arama kelimesi başlıkta geçmeli
+
+    if(gSearchResults.length === 0){
+      el.innerHTML = `<div style="padding:12px;font-size:13px;color:var(--text-faint);text-align:center">Sonuç bulunamadı. Farklı anahtar kelimeler deneyin.</div>`;
+      return;
+    }
+
+    // Kural 2 & 3: Yayınevine göre grupla, bilinmeyenler en alta
+    const grouped = {};
+    gSearchResults.forEach((r, i) => {
+      const pub = r.publisher || '__bilinmiyor__';
+      if(!grouped[pub]) grouped[pub] = [];
+      grouped[pub].push({...r, _idx: i});
     });
 
-    el.innerHTML = `<div class="api-results">
-      ${gSearchResults.map((r, i) => `
-        <button class="api-result" onclick="applyGResult(${i})">
-          ${r.coverUrl
-            ? `<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`
-            : `<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}
-          <div class="api-result-info">
-            <div class="api-result-title">${esc(r.title)}</div>
-            <div class="api-result-sub">${esc(r.author)}${r.publisher ? ' · ' + esc(r.publisher) : ''}</div>
-            <div class="api-result-sub">${r.isbn ? 'ISBN: ' + r.isbn : ''}${r.publishYear ? ' · ' + r.publishYear : ''}${r.pageCount ? ' · ' + r.pageCount + ' sayfa' : ''}</div>
+    // Bilinen yayınevleri alfabetik, bilinmeyenler en sona
+    const knownPubs = Object.keys(grouped).filter(p => p !== '__bilinmiyor__').sort();
+    const allPubs = grouped['__bilinmiyor__'] ? [...knownPubs, '__bilinmiyor__'] : knownPubs;
+
+    const groupedHtml = allPubs.map(pub => {
+      const label = pub === '__bilinmiyor__' ? 'Yayınevi: Bilinmiyor' : pub;
+      const books = grouped[pub];
+      return `
+        <div style="margin-bottom:14px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--warm-brown);padding:7px 10px;background:var(--cream2);border-radius:var(--radius);margin-bottom:7px;display:flex;align-items:center;gap:6px">
+            <span>🏛</span><span>${esc(label)}</span>
           </div>
-        </button>`).join('')}
+          ${books.map(r => `
+            <button class="api-result" onclick="applyGResult(${r._idx})">
+              ${r.coverUrl
+                ? `<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`
+                : `<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}
+              <div class="api-result-info">
+                <div class="api-result-title">${esc(r.title)}</div>
+                <div class="api-result-sub">${esc(r.author)}</div>
+                <div class="api-result-sub">${r.isbn ? 'ISBN: ' + r.isbn : ''}${r.publishYear ? ' · ' + r.publishYear : ''}${r.pageCount ? ' · ' + r.pageCount + ' sayfa' : ''}</div>
+              </div>
+            </button>`).join('')}
+        </div>`;
+    }).join('');
+
+    el.innerHTML = `<div class="api-results">
+      ${groupedHtml}
       <div style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:6px">Bir kitaba tıklayarak formu otomatik doldurun</div>
     </div>`;
 
@@ -780,6 +809,66 @@ function submitForm(editId){
   if(!editForm.author){document.getElementById('err-author').style.display='block';document.getElementById('f-author').classList.add('error');return}
   if(editId){const idx=books.findIndex(b=>b.id===editId);if(idx!==-1)books[idx]={...books[idx],...editForm};saveBooks();toast('Değişiklikler kaydedildi');editForm=null;navigate('detail',editId)}
   else{const newBook={...editForm,id:'book-'+Date.now(),addedAt:new Date().toISOString().split('T')[0]};books.push(newBook);saveBooks();toast('Kitap koleksiyona eklendi');editForm=null;navigate('detail',newBook.id)}
+}
+
+function renderLibraryResults(){
+  const res=filtered();
+  const lib=library();
+  const anyFilter=filters.category||filters.status||filters.location||filters.publisher||filters.author;
+
+  const titleMatchedBooks = searchQ
+    ? (() => {
+        const q = searchQ.toLowerCase();
+        const titleMatches = res.filter(b => b.title.toLowerCase().includes(q));
+        const distinctPublishers = new Set(titleMatches.map(b => b.publisher || 'Yayınevi Bilinmiyor'));
+        return titleMatches.length > 1 && distinctPublishers.size > 1 ? titleMatches : null;
+      })()
+    : null;
+  const showGrouped = !!titleMatchedBooks && !filters.publisher;
+
+  let resultsHtml='';
+  if(res.length===0){
+    resultsHtml=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Sonuç bulunamadı</div><div class="empty-sub">Arama kriterlerinizi değiştirin.</div></div>`;
+  } else if(showGrouped){
+    const grouped={};
+    titleMatchedBooks.forEach(b=>{
+      const pub=b.publisher||'Yayınevi Bilinmiyor';
+      if(!grouped[pub])grouped[pub]=[];
+      grouped[pub].push(b);
+    });
+    const pubs=Object.keys(grouped).sort();
+    const titleMatchedIds = new Set(titleMatchedBooks.map(b=>b.id));
+    const otherRes = res.filter(b=>!titleMatchedIds.has(b.id));
+    const groupedHtml = pubs.map(pub=>`
+      <div class="publisher-group">
+        <div class="publisher-group-header">
+          <span class="publisher-group-icon">🏛</span>
+          <span class="publisher-group-name">${esc(pub)}</span>
+          <span class="publisher-group-count">${grouped[pub].length} kitap</span>
+        </div>
+        ${viewMode==='grid'
+          ?`<div class="book-grid">${grouped[pub].map(b=>bookCard(b)).join('')}</div>`
+          :renderListView(grouped[pub])}
+      </div>`).join('');
+    const otherHtml = otherRes.length
+      ? `<div style="margin-top:10px;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--text-faint);letter-spacing:.06em;text-transform:uppercase">Diğer Sonuçlar</div>
+         ${viewMode==='grid'?`<div class="book-grid">${otherRes.map(b=>bookCard(b)).join('')}</div>`:renderListView(otherRes)}`
+      : '';
+    resultsHtml = groupedHtml + otherHtml;
+  } else {
+    resultsHtml = viewMode==='grid'
+      ?`<div class="book-grid">${res.map(b=>bookCard(b)).join('')}</div>`
+      :renderListView(res);
+  }
+
+  // Sadece sonuç alanını ve sayacı güncelle
+  const resultsEl = document.getElementById('lib-results');
+  if(resultsEl) resultsEl.innerHTML = resultsHtml;
+  const countEl = document.getElementById('lib-count');
+  if(countEl) countEl.textContent = `${lib.length} kitap · ${res.length} sonuç`;
+  // Temizle butonunu güncelle
+  const clearEl = document.getElementById('lib-clear');
+  if(clearEl) clearEl.style.display = searchQ ? 'block' : 'none';
 }
 
 function renderPage(){
