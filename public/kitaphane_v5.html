@@ -361,7 +361,7 @@ function parseBookItem(item){
     publisher:info.publisher||'',
     publishYear:info.publishedDate?parseInt(info.publishedDate):'',
     pageCount:info.pageCount||'',
-    description:info.description?info.description.slice(0,400):'',
+    description:info.description?info.description:'',
     coverUrl:rawCover.replace('http://','https://'),
     category:(info.categories||[])[0]||'',
     language:info.language==='tr'?'Türkçe':info.language==='en'?'İngilizce':info.language||'Diğer',
