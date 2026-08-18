@@ -617,12 +617,21 @@ async function loadPublisherRecommendations(publisher, currentTitle){
     el.innerHTML='';
   }
 }
+function updateFormFields(){
+  const f=editForm;
+  const fields={
+    'f-title':f.title,'f-author':f.author,
+  };
+  Object.entries(fields).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.value=val||'';});
+  // Rating güncellemesi için rating-pip'leri yeniden çiz
+  document.querySelectorAll('.rating-pip').forEach((btn,i)=>{btn.classList.toggle('sel',(f.rating||0)>i);});
+}
 
 function applyGResult(i){
   const r=gSearchResults[i];
   if(!r)return;
   editForm={...editForm,...r,status:editForm.status||'unread',location:editForm.location||'home',rating:editForm.rating||0,inWishlist:false,personalNote:editForm.personalNote||''};
-  renderPage();
+  updateFormFields();
   toast('✓ Kitap bilgileri forma aktarıldı');
   // Yayınevi önerilerini yükle
   if(r.publisher){
@@ -634,7 +643,7 @@ function applyPubRec(i){
   const r=pubRecResults[i];
   if(!r)return;
   editForm={...editForm,...r,status:editForm.status||'unread',location:editForm.location||'home',rating:editForm.rating||0,inWishlist:false,personalNote:editForm.personalNote||''};
-  renderPage();
+  updateFormFields();
   toast('✓ Kitap bilgileri forma aktarıldı');
   if(r.publisher){
     setTimeout(()=>loadPublisherRecommendations(r.publisher, r.title), 100);
