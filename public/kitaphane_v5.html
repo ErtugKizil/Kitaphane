@@ -8,48 +8,22 @@
 <body>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Manrope:wght@300;400;500;600;700&display=swap');
-
 *{box-sizing:border-box;margin:0;padding:0}
-
 :root{
-  --cream:#F5EFE6;
-  --cream2:#EFE3D0;
-  --cream3:#E4D5BB;
-  --surface:#FFF9F0;
-  --surface2:#FAF3E8;
-  --espresso:#2B2118;
-  --dark-brown:#5A3825;
-  --mid-brown:#6B4423;
-  --warm-brown:#8A6240;
-  --tan:#B8895B;
-  --copper:#C49A6C;
-  --sand:#D4B896;
-  --text-dark:#2B2118;
-  --text-mid:#4A3728;
-  --text-muted:#7A6A58;
-  --text-faint:#A89880;
-  --gold:#B8924A;
-  --gold-light:#D4AC6A;
-  --chestnut:#7C3A2A;
-  --chestnut-light:#A04835;
-  --olive:#4A5A38;
-  --olive-light:#667A52;
-  --olive-pale:#E8EDDF;
-  --status-unread-bg:#F0E8DC;--status-unread-fg:#6B4423;
-  --status-reading-bg:#E8EDDF;--status-reading-fg:#3A5028;
-  --status-finished-bg:#F2E8E0;--status-finished-fg:#7C3A2A;
-  --status-paused-bg:#EDE8E2;--status-paused-fg:#5A4A38;
+  --cream:#F5EFE6;--cream2:#EFE3D0;--cream3:#E4D5BB;--surface:#FFF9F0;--surface2:#FAF3E8;
+  --espresso:#2B2118;--dark-brown:#5A3825;--mid-brown:#6B4423;--warm-brown:#8A6240;
+  --tan:#B8895B;--copper:#C49A6C;--sand:#D4B896;--text-dark:#2B2118;--text-mid:#4A3728;
+  --text-muted:#7A6A58;--text-faint:#A89880;--gold:#B8924A;--gold-light:#D4AC6A;
+  --chestnut:#7C3A2A;--chestnut-light:#A04835;--olive:#4A5A38;--olive-light:#667A52;--olive-pale:#E8EDDF;
+  --status-unread-bg:#F0E8DC;--status-unread-fg:#6B4423;--status-reading-bg:#E8EDDF;--status-reading-fg:#3A5028;
+  --status-finished-bg:#F2E8E0;--status-finished-fg:#7C3A2A;--status-paused-bg:#EDE8E2;--status-paused-fg:#5A4A38;
   --status-dropped-bg:#ECE9E5;--status-dropped-fg:#8A7A6A;
-  --radius:10px;--radius-lg:14px;--radius-xl:18px;
-  --sidebar-w:220px;
+  --radius:10px;--radius-lg:14px;--radius-xl:18px;--sidebar-w:220px;
   --paper-texture:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(139,98,64,.018) 2px,rgba(139,98,64,.018) 3px);
 }
-
 body{font-family:'Manrope',sans-serif;background:var(--cream);color:var(--text-dark);font-size:16px;min-height:100vh;background-image:var(--paper-texture);-webkit-font-smoothing:antialiased}
 h1,h2,h3,.serif{font-family:'Playfair Display',serif}
-
 #app{display:flex;min-height:100vh}
-
 .sidebar{width:var(--sidebar-w);background:rgba(43,33,24,.97);backdrop-filter:blur(12px);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:200;border-right:1px solid rgba(255,255,255,.06);}
 .sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,var(--copper) 40%,var(--gold) 70%,transparent);opacity:.3;}
 .sidebar-logo{padding:28px 20px 24px;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;display:flex;align-items:center;gap:11px;}
@@ -72,7 +46,6 @@ h1,h2,h3,.serif{font-family:'Playfair Display',serif}
 .sidebar-footer{padding:16px 14px;border-top:1px solid rgba(255,255,255,.06);font-size:11px;color:rgba(255,255,255,.2);text-align:center;letter-spacing:.05em;}
 .content{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh;}
 main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
-
 .hero{margin-bottom:40px;padding-bottom:36px;border-bottom:1px solid rgba(90,56,37,.1)}
 .hero h1{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:var(--text-dark);line-height:1.08;margin-bottom:12px;letter-spacing:-.02em}
 .hero h1 em{color:var(--dark-brown);font-style:italic}
@@ -238,12 +211,9 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .search-loading-dot:nth-child(2){animation-delay:.2s}
 .search-loading-dot:nth-child(3){animation-delay:.4s}
 @keyframes bounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
-
-/* Yayınevi Önerileri */
 .pub-recommendations{background:var(--cream2);border:1.5px solid rgba(90,56,37,.12);border-radius:var(--radius-lg);padding:18px;margin-top:28px}
 .pub-rec-title{font-size:14px;font-weight:700;color:var(--text-mid);margin-bottom:14px;display:flex;align-items:center;gap:7px;font-family:'Manrope',sans-serif}
 .pub-rec-grid{display:flex;flex-direction:column;gap:7px}
-
 @media(max-width:860px){
   .sidebar{width:64px}
   .sidebar-logo-text,.sidebar-logo-tagline,.nav-item span:not(.nav-item-icon),.sidebar-add-label{display:none}
@@ -275,15 +245,9 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
       </div>
     </div>
     <nav class="sidebar-nav">
-      <button class="nav-item active" id="nav-home" onclick="navigate('home')">
-        <span class="nav-item-icon">🏠</span><span>Ana Sayfa</span>
-      </button>
-      <button class="nav-item" id="nav-library" onclick="navigate('library')">
-        <span class="nav-item-icon">📖</span><span>Kütüphanem</span>
-      </button>
-      <button class="nav-item" id="nav-wishlist" onclick="navigate('wishlist')">
-        <span class="nav-item-icon">♥</span><span>İstek Listesi</span>
-      </button>
+      <button class="nav-item active" id="nav-home" onclick="navigate('home')"><span class="nav-item-icon">🏠</span><span>Ana Sayfa</span></button>
+      <button class="nav-item" id="nav-library" onclick="navigate('library')"><span class="nav-item-icon">📖</span><span>Kütüphanem</span></button>
+      <button class="nav-item" id="nav-wishlist" onclick="navigate('wishlist')"><span class="nav-item-icon">♥</span><span>İstek Listesi</span></button>
     </nav>
     <button class="sidebar-add" onclick="navigate('add')">
       <span class="sidebar-add-icon">＋</span>
@@ -291,22 +255,20 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
     </button>
     <div class="sidebar-footer">kitaphane © 2024</div>
   </aside>
-  <div class="content">
-    <main id="main-content"></main>
-  </div>
+  <div class="content"><main id="main-content"></main></div>
 </div>
 <div id="toast"></div>
 
 <script>
-const STATUS_LABELS = {unread:'Okunmadı',reading:'Okunuyor',finished:'Okundu',paused:'Askıda',dropped:'Bırakıldı'};
-const STATUS_CLS    = {unread:'s-unread',reading:'s-reading',finished:'s-finished',paused:'s-paused',dropped:'s-dropped'};
-const LOC_LABELS    = {home:'Evde',office:'Ofiste',lent:'Ödünç verildi',storage:'Depoda',other:'Diğer'};
-function getCategories(){const fromBooks=[...new Set([...books.map(b=>b.category),(editForm&&editForm.category)||null].filter(Boolean))].sort();return fromBooks;}
-const API_KEY = 'AIzaSyAuMmEu0ObGWsh7j25rMk7efRTjwxNhVcg';
-const STORAGE_KEY = 'kitaphane_books_v1';
+const STATUS_LABELS={unread:'Okunmadı',reading:'Okunuyor',finished:'Okundu',paused:'Askıda',dropped:'Bırakıldı'};
+const STATUS_CLS={unread:'s-unread',reading:'s-reading',finished:'s-finished',paused:'s-paused',dropped:'s-dropped'};
+const LOC_LABELS={home:'Evde',office:'Ofiste',lent:'Ödünç verildi',storage:'Depoda',other:'Diğer'};
+const API_KEY='AIzaSyAuMmEu0ObGWsh7j25rMk7efRTjwxNhVcg';
+const STORAGE_KEY='kitaphane_books_v1';
+function getCategories(){return[...new Set([...books.map(b=>b.category),(editForm&&editForm.category)||null].filter(Boolean))].sort();}
 
-const DEMO_BOOKS = [
-  {id:'1',title:'Suç ve Ceza',author:'Fyodor Dostoyevski',isbn:'9789750719387',publisher:'İş Bankası',publishYear:1866,pageCount:672,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8091016-L.jpg',description:'Rus edebiyatının başyapıtlarından biri.',status:'finished',location:'home',personalNote:'İkinci kez okuyorum. Her seferinde farklı bir şey keşfediyorum.',rating:5,addedAt:'2024-01-15',finishedAt:'2024-02-20',inWishlist:false},
+const DEMO_BOOKS=[
+  {id:'1',title:'Suç ve Ceza',author:'Fyodor Dostoyevski',isbn:'9789750719387',publisher:'İş Bankası',publishYear:1866,pageCount:672,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8091016-L.jpg',description:'Rus edebiyatının başyapıtlarından biri.',status:'finished',location:'home',personalNote:'İkinci kez okuyorum.',rating:5,addedAt:'2024-01-15',finishedAt:'2024-02-20',inWishlist:false},
   {id:'1b',title:'Suç ve Ceza',author:'Fyodor Dostoyevski',isbn:'9789750812345',publisher:'Can Yayınları',publishYear:1866,pageCount:704,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8226560-L.jpg',description:'Can Yayınları baskısı.',status:'unread',location:'home',addedAt:'2024-05-10',inWishlist:false},
   {id:'2',title:'Sapiens',author:'Yuval Noah Harari',isbn:'9789750519284',publisher:'Kolektif Kitap',publishYear:2011,pageCount:512,category:'Tarih',coverUrl:'https://covers.openlibrary.org/b/id/8739161-L.jpg',description:'İnsanlık tarihinin cesur ve kapsamlı bir yorumu.',status:'finished',location:'office',rating:4,addedAt:'2024-02-01',finishedAt:'2024-03-10',inWishlist:false},
   {id:'3',title:'Dune',author:'Frank Herbert',isbn:'9780441013593',publisher:'Ace Books',publishYear:1965,pageCount:688,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8475307-L.jpg',description:'Arrakis gezegeninde geçen bilim kurgu efsanesi.',status:'reading',location:'home',personalNote:'Sayfa 300\'deyim.',rating:5,addedAt:'2024-03-05',startedAt:'2024-04-01',inWishlist:false},
@@ -354,18 +316,7 @@ function parseBookItem(item){
   const isbn10=(info.industryIdentifiers||[]).find(x=>x.type==='ISBN_10');
   const isbn=(isbn13||isbn10||{}).identifier||'';
   const rawCover=(info.imageLinks||{}).thumbnail||(info.imageLinks||{}).smallThumbnail||'';
-  return {
-    title:info.title||'',
-    author:(info.authors||[]).join(', '),
-    isbn,
-    publisher:info.publisher||'',
-    publishYear:info.publishedDate?parseInt(info.publishedDate):'',
-    pageCount:info.pageCount||'',
-    description:info.description?info.description:'',
-    coverUrl:rawCover.replace('http://','https://'),
-    category:(info.categories||[])[0]||'',
-    language:info.language==='tr'?'Türkçe':info.language==='en'?'İngilizce':info.language||'Diğer',
-  };
+  return{title:info.title||'',author:(info.authors||[]).join(', '),isbn,publisher:info.publisher||'',publishYear:info.publishedDate?parseInt(info.publishedDate):'',pageCount:info.pageCount||'',description:info.description||'',coverUrl:rawCover.replace('http://','https://'),category:(info.categories||[])[0]||'',language:info.language==='tr'?'Türkçe':info.language==='en'?'İngilizce':info.language||'Diğer'};
 }
 
 function renderHome(){
@@ -373,202 +324,96 @@ function renderHome(){
   const reading=library().filter(b=>b.status==='reading');
   const recent=[...library()].sort((a,b)=>b.addedAt.localeCompare(a.addedAt)).slice(0,4);
   const topRated=[...library()].filter(b=>b.rating===5).slice(0,3);
-  let html=`
-  <div class="hero">
-    <h1>Dijital<br><em>kütüphaneniz</em>.</h1>
-    <p>Kitaplarınızı takip edin, notlar alın, okuma yolculuğunuzu keşfedin.</p>
-  </div>
-  <div class="stats-grid">
-    ${[['📚','Toplam Kitap',s.total,'background:var(--dark-brown);color:var(--cream)'],
-       ['✓','Okundu',s.finished,'background:var(--olive);color:#fff'],
-       ['◎','Okunuyor',s.reading,'background:var(--chestnut);color:#fff'],
-       ['♥','İstek Listesi',s.wishlist,'background:var(--warm-brown);color:#fff']]
-       .map(([icon,label,val,style])=>`<div class="stat-card"><div class="stat-icon" style="${style}">${icon}</div><div class="stat-num">${val}</div><div class="stat-label">${label}</div></div>`).join('')}
-  </div>`;
-  if(reading.length){
-    html+=`<div style="margin-bottom:32px"><div class="section-header"><h2 class="section-title">Şu an okunanlar</h2></div><div class="reading-strip">
-    ${reading.map(b=>`<div class="reading-item" onclick="navigate('detail','${b.id}')">
-      ${b.coverUrl?`<img src="${b.coverUrl}" class="reading-cover" onerror="this.style.display='none'" alt="">`:`<div class="reading-cover" style="display:flex;align-items:center;justify-content:center;font-size:18px;border-radius:3px;background:var(--cream2)">📖</div>`}
-      <div class="reading-info"><div class="reading-title">${esc(b.title)}</div><div class="reading-author">${esc(b.author)}</div>${b.personalNote?`<div class="reading-note">"${esc(b.personalNote)}"</div>`:''}</div>
-      <div class="arrow">›</div></div>`).join('')}
-    </div></div>`;
-  }
+  let html=`<div class="hero"><h1>Dijital<br><em>kütüphaneniz</em>.</h1><p>Kitaplarınızı takip edin, notlar alın, okuma yolculuğunuzu keşfedin.</p></div>
+  <div class="stats-grid">${[['📚','Toplam Kitap',s.total,'background:var(--dark-brown);color:var(--cream)'],['✓','Okundu',s.finished,'background:var(--olive);color:#fff'],['◎','Okunuyor',s.reading,'background:var(--chestnut);color:#fff'],['♥','İstek Listesi',s.wishlist,'background:var(--warm-brown);color:#fff']].map(([icon,label,val,style])=>`<div class="stat-card"><div class="stat-icon" style="${style}">${icon}</div><div class="stat-num">${val}</div><div class="stat-label">${label}</div></div>`).join('')}</div>`;
+  if(reading.length){html+=`<div style="margin-bottom:32px"><div class="section-header"><h2 class="section-title">Şu an okunanlar</h2></div><div class="reading-strip">${reading.map(b=>`<div class="reading-item" onclick="navigate('detail','${b.id}')">${b.coverUrl?`<img src="${b.coverUrl}" class="reading-cover" onerror="this.style.display='none'" alt="">`:`<div class="reading-cover" style="display:flex;align-items:center;justify-content:center;font-size:18px;border-radius:3px;background:var(--cream2)">📖</div>`}<div class="reading-info"><div class="reading-title">${esc(b.title)}</div><div class="reading-author">${esc(b.author)}</div>${b.personalNote?`<div class="reading-note">"${esc(b.personalNote)}"</div>`:''}</div><div class="arrow">›</div></div>`).join('')}</div></div>`;}
   html+=`<div style="margin-bottom:32px"><div class="section-header"><h2 class="section-title">Son eklenenler</h2><button class="see-all" onclick="navigate('library')">Tümünü Gör →</button></div><div class="book-grid">${recent.map(b=>bookCard(b)).join('')}</div></div>`;
-  if(topRated.length){
-    html+=`<div><div class="section-header"><h2 class="section-title">En çok beğenilenler</h2></div><div class="rated-grid">
-    ${topRated.map(b=>`<div class="rated-item" onclick="navigate('detail','${b.id}')">
-      ${b.coverUrl?`<img src="${b.coverUrl}" class="rated-cover" onerror="this.style.display='none'" alt="">`:`<div class="rated-cover" style="display:flex;align-items:center;justify-content:center;background:var(--cream2);border-radius:3px">📖</div>`}
-      <div><div class="rated-title">${esc(b.title)}</div><div class="rated-author">${esc(b.author)}</div><div class="rated-stars">${'⭐'.repeat(b.rating||0)}</div></div>
-    </div>`).join('')}
-    </div></div>`;
-  }
+  if(topRated.length){html+=`<div><div class="section-header"><h2 class="section-title">En çok beğenilenler</h2></div><div class="rated-grid">${topRated.map(b=>`<div class="rated-item" onclick="navigate('detail','${b.id}')">${b.coverUrl?`<img src="${b.coverUrl}" class="rated-cover" onerror="this.style.display='none'" alt="">`:`<div class="rated-cover" style="display:flex;align-items:center;justify-content:center;background:var(--cream2);border-radius:3px">📖</div>`}<div><div class="rated-title">${esc(b.title)}</div><div class="rated-author">${esc(b.author)}</div><div class="rated-stars">${'⭐'.repeat(b.rating||0)}</div></div></div>`).join('')}</div></div>`;}
   return html;
 }
 
 function bookCard(b){
-  return `<div class="book-card">
-    <div class="book-cover" onclick="navigate('detail','${b.id}')">
-      ${b.coverUrl?`<img src="${b.coverUrl}" onerror="this.style.display='none'" alt="">`:''}
-      ${!b.coverUrl?`<div class="cover-placeholder"><div class="cover-placeholder-icon">📖</div><div class="cover-placeholder-text">${esc(b.title)}</div></div>`:''}
-      <span class="status-badge ${STATUS_CLS[b.status]}">${STATUS_LABELS[b.status]}</span>
-      ${b.rating?`<span class="rating-badge">★ ${b.rating}</span>`:''}
-    </div>
-    <button class="wish-btn ${b.inWishlist?'wishlisted':''}" onclick="toggleWish('${b.id}')">${b.inWishlist?'♥':'♡'}</button>
-    <div class="book-info" onclick="navigate('detail','${b.id}')">
-      <div class="book-title">${esc(b.title)}</div>
-      <div class="book-author">${esc(b.author)}</div>
-      ${b.location?`<div class="book-location">📍 ${LOC_LABELS[b.location]}</div>`:''}
-    </div>
-  </div>`;
+  return`<div class="book-card"><div class="book-cover" onclick="navigate('detail','${b.id}')">${b.coverUrl?`<img src="${b.coverUrl}" onerror="this.style.display='none'" alt="">`:''}${!b.coverUrl?`<div class="cover-placeholder"><div class="cover-placeholder-icon">📖</div><div class="cover-placeholder-text">${esc(b.title)}</div></div>`:''}<span class="status-badge ${STATUS_CLS[b.status]}">${STATUS_LABELS[b.status]}</span>${b.rating?`<span class="rating-badge">★ ${b.rating}</span>`:''}</div><button class="wish-btn ${b.inWishlist?'wishlisted':''}" onclick="toggleWish('${b.id}')">${b.inWishlist?'♥':'♡'}</button><div class="book-info" onclick="navigate('detail','${b.id}')"><div class="book-title">${esc(b.title)}</div><div class="book-author">${esc(b.author)}</div>${b.location?`<div class="book-location">📍 ${LOC_LABELS[b.location]}</div>`:''}</div></div>`;
 }
 
 function renderLibrary(){
-  const res=filtered();
-  const lib=library();
+  const res=filtered(),lib=library();
   const publishers=[...new Set(lib.map(b=>b.publisher).filter(Boolean))].sort();
   const authors=[...new Set(lib.map(b=>b.author).filter(Boolean))].sort();
   const anyFilter=filters.category||filters.status||filters.location||filters.publisher||filters.author;
   const titleMatchedBooks=searchQ?(()=>{const q=searchQ.toLowerCase();const tm=res.filter(b=>b.title.toLowerCase().includes(q));const dp=new Set(tm.map(b=>b.publisher||'Yayınevi Bilinmiyor'));return tm.length>1&&dp.size>1?tm:null;})():null;
   const showGrouped=!!titleMatchedBooks&&!filters.publisher;
   let resultsHtml='';
-  if(res.length===0){
-    resultsHtml=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Sonuç bulunamadı</div><div class="empty-sub">Arama kriterlerinizi değiştirin.</div></div>`;
-  } else if(showGrouped){
-    const grouped={};
-    titleMatchedBooks.forEach(b=>{const pub=b.publisher||'Yayınevi Bilinmiyor';if(!grouped[pub])grouped[pub]=[];grouped[pub].push(b);});
-    const pubs=Object.keys(grouped).sort();
-    const tmIds=new Set(titleMatchedBooks.map(b=>b.id));
-    const otherRes=res.filter(b=>!tmIds.has(b.id));
+  if(res.length===0){resultsHtml=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Sonuç bulunamadı</div><div class="empty-sub">Arama kriterlerinizi değiştirin.</div></div>`;}
+  else if(showGrouped){
+    const grouped={};titleMatchedBooks.forEach(b=>{const pub=b.publisher||'Yayınevi Bilinmiyor';if(!grouped[pub])grouped[pub]=[];grouped[pub].push(b);});
+    const pubs=Object.keys(grouped).sort();const tmIds=new Set(titleMatchedBooks.map(b=>b.id));const otherRes=res.filter(b=>!tmIds.has(b.id));
     const groupedHtml=pubs.map(pub=>`<div class="publisher-group"><div class="publisher-group-header"><span class="publisher-group-icon">🏛</span><span class="publisher-group-name">${esc(pub)}</span><span class="publisher-group-count">${grouped[pub].length} kitap</span></div>${viewMode==='grid'?`<div class="book-grid">${grouped[pub].map(b=>bookCard(b)).join('')}</div>`:renderListView(grouped[pub])}</div>`).join('');
     const otherHtml=otherRes.length?`<div style="margin-top:10px;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--text-faint);letter-spacing:.06em;text-transform:uppercase">Diğer Sonuçlar</div>${viewMode==='grid'?`<div class="book-grid">${otherRes.map(b=>bookCard(b)).join('')}</div>`:renderListView(otherRes)}`:'';
     resultsHtml=groupedHtml+otherHtml;
-  } else {
-    resultsHtml=viewMode==='grid'?`<div class="book-grid">${res.map(b=>bookCard(b)).join('')}</div>`:renderListView(res);
-  }
-  return `
-  <div class="section-header" style="margin-bottom:18px">
-    <div><h1 class="section-title" style="font-size:30px">Kütüphanem</h1>
-    <div id="lib-count" style="font-size:13px;color:var(--text-faint);margin-top:3px;font-weight:500">${lib.length} kitap · ${res.length} sonuç</div></div>
-  </div>
-  <div class="search-row">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input id="lib-search" type="text" value="${esc(searchQ)}" placeholder="Kitap adı, yazar, ISBN, yayınevi..." oninput="searchQ=this.value;renderLibraryResults()">
-      ${searchQ?`<button class="search-clear" onclick="searchQ='';document.getElementById('lib-search').value='';renderLibraryResults()">×</button>`:''}
-    </div>
-    <div class="view-toggle">
-      <button class="view-btn ${viewMode==='grid'?'active':''}" onclick="viewMode='grid';renderPage()">⊞</button>
-      <button class="view-btn ${viewMode==='list'?'active':''}" onclick="viewMode='list';renderPage()">☰</button>
-    </div>
-  </div>
+  }else{resultsHtml=viewMode==='grid'?`<div class="book-grid">${res.map(b=>bookCard(b)).join('')}</div>`:renderListView(res);}
+  return`<div class="section-header" style="margin-bottom:18px"><div><h1 class="section-title" style="font-size:30px">Kütüphanem</h1><div id="lib-count" style="font-size:13px;color:var(--text-faint);margin-top:3px;font-weight:500">${lib.length} kitap · ${res.length} sonuç</div></div></div>
+  <div class="search-row"><div class="search-wrap"><span class="search-icon">🔍</span><input id="lib-search" type="text" value="${esc(searchQ)}" placeholder="Kitap adı, yazar, ISBN, yayınevi..." oninput="searchQ=this.value;renderLibraryResults()">${searchQ?`<button class="search-clear" onclick="searchQ='';document.getElementById('lib-search').value='';renderLibraryResults()">×</button>`:''}</div><div class="view-toggle"><button class="view-btn ${viewMode==='grid'?'active':''}" onclick="viewMode='grid';renderPage()">⊞</button><button class="view-btn ${viewMode==='list'?'active':''}" onclick="viewMode='list';renderPage()">☰</button></div></div>
   <div class="filter-row">
-    <select class="filter-select ${filters.category?'has-value':''}" onchange="filters.category=this.value;renderPage()">
-      <option value="">Kategori</option>${getCategories().map(c=>`<option value="${c}" ${filters.category===c?'selected':''}>${c}</option>`).join('')}
-    </select>
-    <select class="filter-select ${filters.status?'has-value':''}" onchange="filters.status=this.value;renderPage()">
-      <option value="">Durum</option>${Object.entries(STATUS_LABELS).map(([v,l])=>`<option value="${v}" ${filters.status===v?'selected':''}>${l}</option>`).join('')}
-    </select>
-    <select class="filter-select ${filters.location?'has-value':''}" onchange="filters.location=this.value;renderPage()">
-      <option value="">Konum</option>${Object.entries(LOC_LABELS).map(([v,l])=>`<option value="${v}" ${filters.location===v?'selected':''}>${l}</option>`).join('')}
-    </select>
-    <select class="filter-select ${filters.publisher?'has-value':''}" onchange="filters.publisher=this.value;renderPage()">
-      <option value="">Yayınevi</option>${publishers.map(p=>`<option value="${esc(p)}" ${filters.publisher===p?'selected':''}>${esc(p)}</option>`).join('')}
-    </select>
-    <select class="filter-select ${filters.author?'has-value':''}" onchange="filters.author=this.value;renderPage()">
-      <option value="">Yazar</option>${authors.map(a=>`<option value="${esc(a)}" ${filters.author===a?'selected':''}>${esc(a)}</option>`).join('')}
-    </select>
+    <select class="filter-select ${filters.category?'has-value':''}" onchange="filters.category=this.value;renderPage()"><option value="">Kategori</option>${getCategories().map(c=>`<option value="${c}" ${filters.category===c?'selected':''}>${c}</option>`).join('')}</select>
+    <select class="filter-select ${filters.status?'has-value':''}" onchange="filters.status=this.value;renderPage()"><option value="">Durum</option>${Object.entries(STATUS_LABELS).map(([v,l])=>`<option value="${v}" ${filters.status===v?'selected':''}>${l}</option>`).join('')}</select>
+    <select class="filter-select ${filters.location?'has-value':''}" onchange="filters.location=this.value;renderPage()"><option value="">Konum</option>${Object.entries(LOC_LABELS).map(([v,l])=>`<option value="${v}" ${filters.location===v?'selected':''}>${l}</option>`).join('')}</select>
+    <select class="filter-select ${filters.publisher?'has-value':''}" onchange="filters.publisher=this.value;renderPage()"><option value="">Yayınevi</option>${publishers.map(p=>`<option value="${esc(p)}" ${filters.publisher===p?'selected':''}>${esc(p)}</option>`).join('')}</select>
+    <select class="filter-select ${filters.author?'has-value':''}" onchange="filters.author=this.value;renderPage()"><option value="">Yazar</option>${authors.map(a=>`<option value="${esc(a)}" ${filters.author===a?'selected':''}>${esc(a)}</option>`).join('')}</select>
     ${anyFilter?`<button class="filter-select" style="cursor:pointer;color:var(--chestnut);border-color:rgba(124,58,42,.25)" onclick="filters={category:'',status:'',location:'',publisher:'',author:''};renderPage()">× Temizle</button>`:''}
   </div>
   <div id="lib-results">${resultsHtml}</div>`;
 }
 
 function renderLibraryResults(){
-  const res=filtered();
-  const lib=library();
+  const res=filtered(),lib=library();
   const titleMatchedBooks=searchQ?(()=>{const q=searchQ.toLowerCase();const tm=res.filter(b=>b.title.toLowerCase().includes(q));const dp=new Set(tm.map(b=>b.publisher||'Yayınevi Bilinmiyor'));return tm.length>1&&dp.size>1?tm:null;})():null;
   const showGrouped=!!titleMatchedBooks&&!filters.publisher;
   let resultsHtml='';
-  if(res.length===0){
-    resultsHtml=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Sonuç bulunamadı</div><div class="empty-sub">Arama kriterlerinizi değiştirin.</div></div>`;
-  } else if(showGrouped){
-    const grouped={};
-    titleMatchedBooks.forEach(b=>{const pub=b.publisher||'Yayınevi Bilinmiyor';if(!grouped[pub])grouped[pub]=[];grouped[pub].push(b);});
-    const pubs=Object.keys(grouped).sort();
-    const tmIds=new Set(titleMatchedBooks.map(b=>b.id));
-    const otherRes=res.filter(b=>!tmIds.has(b.id));
+  if(res.length===0){resultsHtml=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Sonuç bulunamadı</div><div class="empty-sub">Arama kriterlerinizi değiştirin.</div></div>`;}
+  else if(showGrouped){
+    const grouped={};titleMatchedBooks.forEach(b=>{const pub=b.publisher||'Yayınevi Bilinmiyor';if(!grouped[pub])grouped[pub]=[];grouped[pub].push(b);});
+    const pubs=Object.keys(grouped).sort();const tmIds=new Set(titleMatchedBooks.map(b=>b.id));const otherRes=res.filter(b=>!tmIds.has(b.id));
     const groupedHtml=pubs.map(pub=>`<div class="publisher-group"><div class="publisher-group-header"><span class="publisher-group-icon">🏛</span><span class="publisher-group-name">${esc(pub)}</span><span class="publisher-group-count">${grouped[pub].length} kitap</span></div>${viewMode==='grid'?`<div class="book-grid">${grouped[pub].map(b=>bookCard(b)).join('')}</div>`:renderListView(grouped[pub])}</div>`).join('');
     const otherHtml=otherRes.length?`<div style="margin-top:10px;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--text-faint);letter-spacing:.06em;text-transform:uppercase">Diğer Sonuçlar</div>${viewMode==='grid'?`<div class="book-grid">${otherRes.map(b=>bookCard(b)).join('')}</div>`:renderListView(otherRes)}`:'';
     resultsHtml=groupedHtml+otherHtml;
-  } else {
-    resultsHtml=viewMode==='grid'?`<div class="book-grid">${res.map(b=>bookCard(b)).join('')}</div>`:renderListView(res);
-  }
+  }else{resultsHtml=viewMode==='grid'?`<div class="book-grid">${res.map(b=>bookCard(b)).join('')}</div>`:renderListView(res);}
   const el=document.getElementById('lib-results');if(el)el.innerHTML=resultsHtml;
   const c=document.getElementById('lib-count');if(c)c.textContent=`${lib.length} kitap · ${res.length} sonuç`;
 }
 
 function renderListView(items){
-  return `<div class="book-list">${items.map(b=>`
-    <div class="book-list-item" onclick="navigate('detail','${b.id}')">
-      ${b.coverUrl?`<img src="${b.coverUrl}" class="list-cover" onerror="this.style.display='none'" alt="">`:`<div class="list-cover" style="display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--cream2);border-radius:5px">📖</div>`}
-      <div class="list-info"><div class="list-title">${esc(b.title)}</div><div class="list-author">${esc(b.author)}</div></div>
-      <div class="list-meta">
-        <span class="status-badge ${STATUS_CLS[b.status]}" style="position:static">${STATUS_LABELS[b.status]}</span>
-        <span class="list-location">📍 ${LOC_LABELS[b.location]}</span>
-        ${b.category?`<span style="font-size:11px;font-weight:500;background:var(--cream2);padding:3px 10px;border-radius:6px;color:var(--warm-brown)">${b.category}</span>`:''}
-      </div>
-    </div>`).join('')}</div>`;
+  return`<div class="book-list">${items.map(b=>`<div class="book-list-item" onclick="navigate('detail','${b.id}')">${b.coverUrl?`<img src="${b.coverUrl}" class="list-cover" onerror="this.style.display='none'" alt="">`:`<div class="list-cover" style="display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--cream2);border-radius:5px">📖</div>`}<div class="list-info"><div class="list-title">${esc(b.title)}</div><div class="list-author">${esc(b.author)}</div></div><div class="list-meta"><span class="status-badge ${STATUS_CLS[b.status]}" style="position:static">${STATUS_LABELS[b.status]}</span><span class="list-location">📍 ${LOC_LABELS[b.location]}</span>${b.category?`<span style="font-size:11px;font-weight:500;background:var(--cream2);padding:3px 10px;border-radius:6px;color:var(--warm-brown)">${b.category}</span>`:''}</div></div>`).join('')}</div>`;
 }
 
 function renderDetail(){
   const b=getBook(currentBookId);
   if(!b)return`<div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">Kitap bulunamadı</div></div>`;
-  return `
-  <button class="back-btn" onclick="navigate('library')">← Kütüphaneye dön</button>
-  <div class="detail-wrap">
-    <div>
-      ${b.coverUrl?`<img src="${b.coverUrl}" class="detail-cover" onerror="this.style.display='none'" alt="">`:`<div class="detail-cover-placeholder"><span style="font-size:32px">📖</span><span style="font-family:'Playfair Display',serif;font-size:12px;color:var(--text-faint);text-align:center;font-style:italic">${esc(b.title)}</span></div>`}
-      <div class="detail-actions" style="margin-top:14px">
-        <button class="btn btn-primary" onclick="navigate('edit','${b.id}')">✏️ Kitabı Düzenle</button>
-        <button class="btn btn-ghost btn-wish ${b.inWishlist?'wishlisted':''}" onclick="toggleWish('${b.id}');renderPage()">${b.inWishlist?'♥ Listede':'♡ Okuma Listeme Al'}</button>
-        <button class="btn btn-ghost btn-danger" onclick="deleteBook('${b.id}')">🗑 Sil</button>
-      </div>
-    </div>
-    <div>
-      <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:6px">
-        <h1 class="detail-title" style="flex:1">${esc(b.title)}</h1>
-        <span class="detail-status status-badge ${STATUS_CLS[b.status]}" style="position:static;margin-top:6px">${STATUS_LABELS[b.status]}</span>
-      </div>
-      <div class="detail-author">${esc(b.author)}</div>
-      ${b.rating?`<div class="stars">${Array.from({length:5}).map((_,i)=>`<span class="star" style="color:${i<b.rating?'var(--gold)':'var(--sand)'}">${i<b.rating?'★':'☆'}</span>`).join('')}<span style="font-size:13px;color:var(--text-faint);margin-left:5px;font-weight:500">${b.rating}/5</span></div>`:''}
-      <div class="meta-grid">
-        ${[['📍','Konum',LOC_LABELS[b.location]],['📂','Kategori',b.category],['🏛','Yayınevi',b.publisher],['📅','Yayın Yılı',b.publishYear],['📄','Sayfa',b.pageCount?b.pageCount+' sayfa':null],['#','ISBN',b.isbn]]
-          .filter(([,,v])=>v).map(([icon,label,val])=>`<div class="meta-item"><div class="meta-label">${icon} ${label}</div><div class="meta-value">${esc(val)}</div></div>`).join('')}
-      </div>
-      ${b.addedAt?`<div style="font-size:12px;color:var(--text-faint);margin-bottom:14px;font-weight:400">Eklendi: ${b.addedAt}${b.startedAt?' · Başlandı: '+b.startedAt:''}${b.finishedAt?' · Bitirildi: '+b.finishedAt:''}</div>`:''}
-      ${b.description?`<div><h2 style="font-family:'Playfair Display',serif;font-size:16px;color:var(--text-dark);margin-bottom:7px;font-weight:600">Hakkında</h2><p class="desc-text">${esc(b.description)}</p></div>`:''}
-      ${b.personalNote?`<div class="personal-note"><div class="note-label">Kişisel Notum</div><div class="note-text">"${esc(b.personalNote)}"</div></div>`:''}
-    </div>
-  </div>`;
+  return`<button class="back-btn" onclick="navigate('library')">← Kütüphaneye dön</button>
+  <div class="detail-wrap"><div>${b.coverUrl?`<img src="${b.coverUrl}" class="detail-cover" onerror="this.style.display='none'" alt="">`:`<div class="detail-cover-placeholder"><span style="font-size:32px">📖</span><span style="font-family:'Playfair Display',serif;font-size:12px;color:var(--text-faint);text-align:center;font-style:italic">${esc(b.title)}</span></div>`}
+  <div class="detail-actions" style="margin-top:14px"><button class="btn btn-primary" onclick="navigate('edit','${b.id}')">✏️ Kitabı Düzenle</button><button class="btn btn-ghost btn-wish ${b.inWishlist?'wishlisted':''}" onclick="toggleWish('${b.id}');renderPage()">${b.inWishlist?'♥ Listede':'♡ Okuma Listeme Al'}</button><button class="btn btn-ghost btn-danger" onclick="deleteBook('${b.id}')">🗑 Sil</button></div></div>
+  <div><div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:6px"><h1 class="detail-title" style="flex:1">${esc(b.title)}</h1><span class="detail-status status-badge ${STATUS_CLS[b.status]}" style="position:static;margin-top:6px">${STATUS_LABELS[b.status]}</span></div>
+  <div class="detail-author">${esc(b.author)}</div>
+  ${b.rating?`<div class="stars">${Array.from({length:5}).map((_,i)=>`<span class="star" style="color:${i<b.rating?'var(--gold)':'var(--sand)'}">${i<b.rating?'★':'☆'}</span>`).join('')}<span style="font-size:13px;color:var(--text-faint);margin-left:5px;font-weight:500">${b.rating}/5</span></div>`:''}
+  <div class="meta-grid">${[['📍','Konum',LOC_LABELS[b.location]],['📂','Kategori',b.category],['🏛','Yayınevi',b.publisher],['📅','Yayın Yılı',b.publishYear],['📄','Sayfa',b.pageCount?b.pageCount+' sayfa':null],['#','ISBN',b.isbn]].filter(([,,v])=>v).map(([icon,label,val])=>`<div class="meta-item"><div class="meta-label">${icon} ${label}</div><div class="meta-value">${esc(val)}</div></div>`).join('')}</div>
+  ${b.addedAt?`<div style="font-size:12px;color:var(--text-faint);margin-bottom:14px;font-weight:400">Eklendi: ${b.addedAt}${b.startedAt?' · Başlandı: '+b.startedAt:''}${b.finishedAt?' · Bitirildi: '+b.finishedAt:''}</div>`:''}
+  ${b.description?`<div><h2 style="font-family:'Playfair Display',serif;font-size:16px;color:var(--text-dark);margin-bottom:7px;font-weight:600">Hakkında</h2><p class="desc-text">${esc(b.description)}</p></div>`:''}
+  ${b.personalNote?`<div class="personal-note"><div class="note-label">Kişisel Notum</div><div class="note-text">"${esc(b.personalNote)}"</div></div>`:''}
+  </div></div>`;
 }
 
-// ── GOOGLE BOOKS API ──────────────────────────────────────────────
-let gSearchResults = [];
-let pubRecResults = [];
+let gSearchResults=[],pubRecResults=[];
 
 async function doGSearch(){
-  const input=document.getElementById('gbooks-q');
-  if(!input)return;
-  const q=input.value.trim();
-  if(!q)return;
-  const el=document.getElementById('gsearch-results');
-  if(!el)return;
+  const input=document.getElementById('gbooks-q');if(!input)return;
+  const q=input.value.trim();if(!q)return;
+  const el=document.getElementById('gsearch-results');if(!el)return;
   el.innerHTML=`<div class="search-loading"><div class="search-loading-dot"></div><div class="search-loading-dot"></div><div class="search-loading-dot"></div><span style="margin-left:4px">Aranıyor...</span></div>`;
   try{
     const isIsbn=/^[0-9\-]{9,}$/.test(q);
     const query=isIsbn?`isbn:${q}`:encodeURIComponent(q);
     const url=`https://www.googleapis.com/books/v1/volumes?key=${API_KEY}&q=${query}&maxResults=8`;
-    const res=await fetch(url);
-    const data=await res.json();
+    const res=await fetch(url);const data=await res.json();
     if(!data.items||data.items.length===0){el.innerHTML=`<div style="padding:12px;font-size:13px;color:var(--text-faint);text-align:center">Sonuç bulunamadı.</div>`;return;}
     const searchTerm=q.toLowerCase();
     gSearchResults=data.items.map(parseBookItem).filter(r=>r.title.toLowerCase().includes(searchTerm));
@@ -580,80 +425,49 @@ async function doGSearch(){
     const groupedHtml=allPubs.map(pub=>{
       const label=pub==='__bilinmiyor__'?'Yayınevi: Bilinmiyor':pub;
       const bks=grouped[pub];
-      return `<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--warm-brown);padding:7px 10px;background:var(--cream2);border-radius:var(--radius);margin-bottom:7px;display:flex;align-items:center;gap:6px"><span>🏛</span><span>${esc(label)}</span></div>${bks.map(r=>`<button class="api-result" onclick="applyGResult(${r._idx})">${r.coverUrl?`<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`:`<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}<div class="api-result-info"><div class="api-result-title">${esc(r.title)}</div><div class="api-result-sub">${esc(r.author)}</div><div class="api-result-sub">${r.isbn?'ISBN: '+r.isbn:''}${r.publishYear?' · '+r.publishYear:''}${r.pageCount?' · '+r.pageCount+' sayfa':''}</div></div></button>`).join('')}</div>`;
+      return`<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--warm-brown);padding:7px 10px;background:var(--cream2);border-radius:var(--radius);margin-bottom:7px;display:flex;align-items:center;gap:6px"><span>🏛</span><span>${esc(label)}</span></div>${bks.map(r=>`<button class="api-result" onclick="applyGResult(${r._idx})">${r.coverUrl?`<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`:`<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}<div class="api-result-info"><div class="api-result-title">${esc(r.title)}</div><div class="api-result-sub">${esc(r.author)}</div><div class="api-result-sub">${r.isbn?'ISBN: '+r.isbn:''}${r.publishYear?' · '+r.publishYear:''}${r.pageCount?' · '+r.pageCount+' sayfa':''}</div></div></button>`).join('')}</div>`;
     }).join('');
     el.innerHTML=`<div class="api-results">${groupedHtml}<div style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:6px">Bir kitaba tıklayarak formu otomatik doldurun</div></div>`;
-  }catch(err){
-    el.innerHTML=`<div style="padding:12px;font-size:13px;color:var(--chestnut);text-align:center">Bağlantı hatası.</div>`;
-  }
+  }catch(err){el.innerHTML=`<div style="padding:12px;font-size:13px;color:var(--chestnut);text-align:center">Bağlantı hatası.</div>`;}
 }
 
-async function loadPublisherRecommendations(publisher, currentTitle){
-  if(!publisher) return;
-  const el=document.getElementById('pub-recommendations');
-  if(!el) return;
+async function loadPublisherRecommendations(publisher,currentTitle){
+  if(!publisher)return;
+  const el=document.getElementById('pub-recommendations');if(!el)return;
   el.innerHTML=`<div class="pub-rec-title">🏛 ${esc(publisher)} — Diğer Kitaplar</div><div class="search-loading"><div class="search-loading-dot"></div><div class="search-loading-dot"></div><div class="search-loading-dot"></div><span style="margin-left:4px">Yükleniyor...</span></div>`;
   try{
     const url=`https://www.googleapis.com/books/v1/volumes?key=${API_KEY}&q=publisher:${encodeURIComponent(publisher)}&maxResults=6`;
-    const res=await fetch(url);
-    const data=await res.json();
+    const res=await fetch(url);const data=await res.json();
     if(!data.items||data.items.length===0){el.innerHTML='';return;}
     pubRecResults=data.items.map(parseBookItem).filter(r=>r.title.toLowerCase()!==currentTitle.toLowerCase());
     if(pubRecResults.length===0){el.innerHTML='';return;}
-    el.innerHTML=`
-      <div class="pub-rec-title">🏛 ${esc(publisher)} — Diğer Kitaplar</div>
-      <div class="pub-rec-grid">
-        ${pubRecResults.slice(0,5).map((r,i)=>`
-          <button class="api-result" onclick="applyPubRec(${i})">
-            ${r.coverUrl?`<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`:`<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}
-            <div class="api-result-info">
-              <div class="api-result-title">${esc(r.title)}</div>
-              <div class="api-result-sub">${esc(r.author)}</div>
-              <div class="api-result-sub">${r.publishYear?r.publishYear:''}${r.pageCount?' · '+r.pageCount+' sayfa':''}</div>
-            </div>
-          </button>`).join('')}
-      </div>`;
-  }catch(err){
-    el.innerHTML='';
-  }
+    el.innerHTML=`<div class="pub-rec-title">🏛 ${esc(publisher)} — Diğer Kitaplar</div><div class="pub-rec-grid">${pubRecResults.slice(0,5).map((r,i)=>`<button class="api-result" onclick="applyPubRec(${i})">${r.coverUrl?`<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`:`<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}<div class="api-result-info"><div class="api-result-title">${esc(r.title)}</div><div class="api-result-sub">${esc(r.author)}</div><div class="api-result-sub">${r.publishYear||''}${r.pageCount?' · '+r.pageCount+' sayfa':''}</div></div></button>`).join('')}</div>`;
+  }catch(err){el.innerHTML='';}
 }
+
 function updateFormFields(){
-  const searchEl=document.getElementById('gsearch-results');
-  const savedHtml=searchEl?searchEl.innerHTML:'';
   renderPage();
-  // Arama kutusundaki yazıyı koru
-  const input=document.getElementById('gbooks-q');
-  if(input)input.value=document.getElementById('gbooks-q-val')||'';
-  // Arama listesini temizle, sadece "seçildi" mesajı göster
   const el=document.getElementById('gsearch-results');
-  if(el&&editForm.title){
+  if(el&&editForm&&editForm.title){
     el.innerHTML=`<div style="padding:10px 12px;font-size:13px;color:var(--olive);background:var(--olive-pale);border-radius:var(--radius);margin-top:8px;display:flex;align-items:center;gap:6px">✓ <strong>${esc(editForm.title)}</strong> seçildi</div>`;
   }
 }
 
 function applyGResult(i){
-  const r=gSearchResults[i];
-  if(!r)return;
+  const r=gSearchResults[i];if(!r)return;
   editForm={...editForm,...r,status:editForm.status||'unread',location:editForm.location||'home',rating:editForm.rating||0,inWishlist:false,personalNote:editForm.personalNote||''};
   updateFormFields();
   toast('✓ Kitap bilgileri forma aktarıldı');
-  // Yayınevi önerilerini yükle
-  if(r.publisher){
-    setTimeout(()=>loadPublisherRecommendations(r.publisher, r.title), 100);
-  }
+  if(r.publisher)setTimeout(()=>loadPublisherRecommendations(r.publisher,r.title),100);
 }
 
 function applyPubRec(i){
-  const r=pubRecResults[i];
-  if(!r)return;
+  const r=pubRecResults[i];if(!r)return;
   editForm={...editForm,...r,status:editForm.status||'unread',location:editForm.location||'home',rating:editForm.rating||0,inWishlist:false,personalNote:editForm.personalNote||''};
   updateFormFields();
   toast('✓ Kitap bilgileri forma aktarıldı');
-  if(r.publisher){
-    setTimeout(()=>loadPublisherRecommendations(r.publisher, r.title), 100);
-  }
+  if(r.publisher)setTimeout(()=>loadPublisherRecommendations(r.publisher,r.title),100);
 }
-// ─────────────────────────────────────────────────────────────────
 
 function renderAddEdit(){
   const isEdit=currentPage==='edit';
@@ -664,26 +478,10 @@ function renderAddEdit(){
   <button class="back-btn" onclick="editForm=null;navigate(${isEdit?`'detail','${currentBookId}'`:"'library'"})">← ${isEdit?'Detaya dön':'Kütüphaneye dön'}</button>
   <h1 class="section-title" style="font-size:30px;margin-bottom:26px">${isEdit?'Kitabı Düzenle':'Koleksiyona Kitap Ekle'}</h1>
   <div class="form-wrap">
-  ${!isEdit?`
-  <div class="search-box">
-    <div class="search-box-title">🔍 Google Books ile Ara</div>
-    <div style="display:flex;gap:8px">
-      <input id="gbooks-q" type="text" class="form-input" placeholder="Kitap adı, yazar veya ISBN..." style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();doGSearch()}">
-      <button class="btn btn-primary" onclick="doGSearch()">Ara</button>
-    </div>
-    <div id="gsearch-results"></div>
-  </div>`:''}
+  ${!isEdit?`<div class="search-box"><div class="search-box-title">🔍 Google Books ile Ara</div><div style="display:flex;gap:8px"><input id="gbooks-q" type="text" class="form-input" placeholder="Kitap adı, yazar veya ISBN..." style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();doGSearch()}"><button class="btn btn-primary" onclick="doGSearch()">Ara</button></div><div id="gsearch-results"></div></div>`:''}
   <div class="form-section-title">Kitap Bilgileri</div>
-  <div class="form-group">
-    <label class="form-label">Kitap Adı <span style="color:var(--chestnut-light)">*</span></label>
-    <input type="text" class="form-input" id="f-title" value="${esc(f.title)}" placeholder="Kitap adını girin" oninput="editForm.title=this.value">
-    <div id="err-title" class="error-msg" style="display:none">Kitap adı gerekli</div>
-  </div>
-  <div class="form-group">
-    <label class="form-label">Yazar <span style="color:var(--chestnut-light)">*</span></label>
-    <input type="text" class="form-input" id="f-author" value="${esc(f.author)}" placeholder="Yazar adını girin" oninput="editForm.author=this.value">
-    <div id="err-author" class="error-msg" style="display:none">Yazar adı gerekli</div>
-  </div>
+  <div class="form-group"><label class="form-label">Kitap Adı <span style="color:var(--chestnut-light)">*</span></label><input type="text" class="form-input" id="f-title" value="${esc(f.title)}" placeholder="Kitap adını girin" oninput="editForm.title=this.value"><div id="err-title" class="error-msg" style="display:none">Kitap adı gerekli</div></div>
+  <div class="form-group"><label class="form-label">Yazar <span style="color:var(--chestnut-light)">*</span></label><input type="text" class="form-input" id="f-author" value="${esc(f.author)}" placeholder="Yazar adını girin" oninput="editForm.author=this.value"><div id="err-author" class="error-msg" style="display:none">Yazar adı gerekli</div></div>
   <div class="form-group"><label class="form-label">Açıklama</label><textarea class="form-input" rows="3" style="resize:none;line-height:1.6" placeholder="Kitap hakkında kısa bilgi..." oninput="editForm.description=this.value">${esc(f.description||'')}</textarea></div>
   <div class="form-grid-2">
     <div class="form-group"><label class="form-label">ISBN</label><input type="text" class="form-input" value="${esc(f.isbn||'')}" placeholder="9780..." oninput="editForm.isbn=this.value"></div>
@@ -712,36 +510,15 @@ function renderAddEdit(){
     ${!isEdit?'<button class="btn btn-wish" style="padding:13px 20px" onclick="submitFormWish()">♥ İstek Listesine Ekle</button>':''}
     <button class="btn btn-ghost" style="padding:13px 24px" onclick="editForm=null;navigate(${isEdit?`'detail','${currentBookId}'`:"'library'"})">İptal</button>
   </div>
+  <div id="pub-recommendations"></div>
+  </div>`;
 }
 
 function renderWishlist(){
   const wl=wishlist();
   const totalPages=wl.reduce((a,b)=>a+(b.pageCount||0),0);
-  return `
-  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:10px">
-    <div><h1 class="section-title" style="font-size:30px">♥ İstek Listesi</h1>
-    <div style="font-size:13px;color:var(--text-faint);margin-top:4px;font-weight:500">${wl.length} kitap · Okumayı beklediğiniz kitaplar</div></div>
-  </div>
-  ${wl.length===0?`<div class="empty"><div class="empty-icon">♥</div><div class="empty-title">İstek listeniz boş</div><div class="empty-sub">Okumak istediğiniz kitapları buraya ekleyin.</div></div>`:`
-  <div class="wish-list">
-    ${wl.map(b=>`<div class="wish-item">
-      <div onclick="navigate('detail','${b.id}')">
-        ${b.coverUrl?`<img src="${b.coverUrl}" class="wish-cover" onerror="this.style.display='none'" alt="">`:`<div class="wish-cover" style="display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--cream2);border-radius:5px">📖</div>`}
-      </div>
-      <div class="wish-info" onclick="navigate('detail','${b.id}')">
-        <div class="wish-title">${esc(b.title)}</div>
-        <div class="wish-author">${esc(b.author)}</div>
-        ${b.publisher?`<div class="wish-pub">${esc(b.publisher)}${b.publishYear?' · '+b.publishYear:''}</div>`:''}
-        ${b.category?`<span class="wish-cat">${b.category}</span>`:''}
-      </div>
-      <div class="wish-actions">
-        <button class="wish-act-btn wish-act-move" onclick="moveToLibrary('${b.id}')">📚 Kütüphaneye Ekle</button>
-        <button class="wish-act-btn wish-act-detail" onclick="navigate('detail','${b.id}')">Detayları Gör →</button>
-        <button class="wish-act-btn wish-act-remove" onclick="toggleWish('${b.id}')">× Çıkar</button>
-      </div>
-    </div>`).join('')}
-  </div>
-  ${totalPages>0?`<div class="wish-footer"><strong>${wl.length}</strong> kitap okumayı bekliyorsunuz — toplam yaklaşık <strong>${totalPages.toLocaleString()}</strong> sayfa.</div>`:''}`}`;
+  return`<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:10px"><div><h1 class="section-title" style="font-size:30px">♥ İstek Listesi</h1><div style="font-size:13px;color:var(--text-faint);margin-top:4px;font-weight:500">${wl.length} kitap · Okumayı beklediğiniz kitaplar</div></div></div>
+  ${wl.length===0?`<div class="empty"><div class="empty-icon">♥</div><div class="empty-title">İstek listeniz boş</div><div class="empty-sub">Okumak istediğiniz kitapları buraya ekleyin.</div></div>`:`<div class="wish-list">${wl.map(b=>`<div class="wish-item"><div onclick="navigate('detail','${b.id}')">${b.coverUrl?`<img src="${b.coverUrl}" class="wish-cover" onerror="this.style.display='none'" alt="">`:`<div class="wish-cover" style="display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--cream2);border-radius:5px">📖</div>`}</div><div class="wish-info" onclick="navigate('detail','${b.id}')"><div class="wish-title">${esc(b.title)}</div><div class="wish-author">${esc(b.author)}</div>${b.publisher?`<div class="wish-pub">${esc(b.publisher)}${b.publishYear?' · '+b.publishYear:''}</div>`:''} ${b.category?`<span class="wish-cat">${b.category}</span>`:''}</div><div class="wish-actions"><button class="wish-act-btn wish-act-move" onclick="moveToLibrary('${b.id}')">📚 Kütüphaneye Ekle</button><button class="wish-act-btn wish-act-detail" onclick="navigate('detail','${b.id}')">Detayları Gör →</button><button class="wish-act-btn wish-act-remove" onclick="toggleWish('${b.id}')">× Çıkar</button></div></div>`).join('')}</div>${totalPages>0?`<div class="wish-footer"><strong>${wl.length}</strong> kitap okumayı bekliyorsunuz — toplam yaklaşık <strong>${totalPages.toLocaleString()}</strong> sayfa.</div>`:''}`}`;
 }
 
 function toggleWish(id){const b=getBook(id);if(!b)return;b.inWishlist=!b.inWishlist;saveBooks();toast(b.inWishlist?'İstek listesine eklendi':'İstek listesinden çıkarıldı');renderPage()}
