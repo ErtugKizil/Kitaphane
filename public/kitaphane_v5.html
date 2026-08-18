@@ -707,12 +707,11 @@ function renderAddEdit(){
     </div>
   </div>
   <div class="form-group"><label class="form-label">Kişisel Not</label><textarea class="form-input" rows="3" style="resize:none;line-height:1.6" placeholder="Bu kitap hakkında notlarınız..." oninput="editForm.personalNote=this.value">${esc(f.personalNote||'')}</textarea></div>
-  <div style="display:flex;gap:10px;margin-top:10px">
+  <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
     <button class="btn btn-primary" style="flex:1;padding:13px" onclick="submitForm(${isEdit?`'${currentBookId}'`:'null'})">${isEdit?'Değişiklikleri Kaydet':'Koleksiyona Ekle'}</button>
+    ${!isEdit?`<button class="btn btn-wish" style="padding:13px 20px" onclick="submitFormWish()">♥ İstek Listesine Ekle</button>`:''}
     <button class="btn btn-ghost" style="padding:13px 24px" onclick="editForm=null;navigate(${isEdit?`'detail','${currentBookId}'`:"'library'"})">İptal</button>
   </div>
-  ${!isEdit&&f.publisher?`<div id="pub-recommendations" class="pub-recommendations"></div>`:`<div id="pub-recommendations"></div>`}
-  </div>`;
 }
 
 function renderWishlist(){
@@ -748,6 +747,13 @@ function renderWishlist(){
 function toggleWish(id){const b=getBook(id);if(!b)return;b.inWishlist=!b.inWishlist;saveBooks();toast(b.inWishlist?'İstek listesine eklendi':'İstek listesinden çıkarıldı');renderPage()}
 function moveToLibrary(id){const b=getBook(id);if(!b)return;b.inWishlist=false;saveBooks();toast(`"${b.title}" kütüphaneye eklendi`);renderPage()}
 function deleteBook(id){const b=getBook(id);if(!b)return;if(!confirm(`"${b.title}" kitabını silmek istiyor musunuz?`))return;books=books.filter(x=>x.id!==id);saveBooks();toast('Kitap silindi');navigate('library')}
+
+function submitFormWish(){
+  if(!editForm.title){document.getElementById('err-title').style.display='block';document.getElementById('f-title').classList.add('error');return}
+  if(!editForm.author){document.getElementById('err-author').style.display='block';document.getElementById('f-author').classList.add('error');return}
+  const newBook={...editForm,id:'book-'+Date.now(),addedAt:new Date().toISOString().split('T')[0],inWishlist:true};
+  books.push(newBook);saveBooks();toast('♥ İstek listesine eklendi');editForm=null;navigate('wishlist');
+}
 
 function submitForm(editId){
   if(!editForm.title){document.getElementById('err-title').style.display='block';document.getElementById('f-title').classList.add('error');return}
