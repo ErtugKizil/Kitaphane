@@ -618,13 +618,21 @@ async function loadPublisherRecommendations(publisher, currentTitle){
   }
 }
 function updateFormFields(){
-  const f=editForm;
-  const fields={
-    'f-title':f.title,'f-author':f.author,
-  };
-  Object.entries(fields).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.value=val||'';});
-  // Rating güncellemesi için rating-pip'leri yeniden çiz
-  document.querySelectorAll('.rating-pip').forEach((btn,i)=>{btn.classList.toggle('sel',(f.rating||0)>i);});
+  renderPage();
+  // Arama sonuçlarını koru
+  const el=document.getElementById('gsearch-results');
+  if(el&&gSearchResults.length>0){
+    const grouped={};
+    gSearchResults.forEach((r,i)=>{const pub=r.publisher||'__bilinmiyor__';if(!grouped[pub])grouped[pub]=[];grouped[pub].push({...r,_idx:i});});
+    const knownPubs=Object.keys(grouped).filter(p=>p!=='__bilinmiyor__').sort();
+    const allPubs=grouped['__bilinmiyor__']?[...knownPubs,'__bilinmiyor__']:knownPubs;
+    const groupedHtml=allPubs.map(pub=>{
+      const label=pub==='__bilinmiyor__'?'Yayınevi: Bilinmiyor':pub;
+      const bks=grouped[pub];
+      return `<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--warm-brown);padding:7px 10px;background:var(--cream2);border-radius:var(--radius);margin-bottom:7px;display:flex;align-items:center;gap:6px"><span>🏛</span><span>${esc(label)}</span></div>${bks.map(r=>`<button class="api-result" onclick="applyGResult(${r._idx})">${r.coverUrl?`<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`:`<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}<div class="api-result-info"><div class="api-result-title">${esc(r.title)}</div><div class="api-result-sub">${esc(r.author)}</div><div class="api-result-sub">${r.isbn?'ISBN: '+r.isbn:''}${r.publishYear?' · '+r.publishYear:''}${r.pageCount?' · '+r.pageCount+' sayfa':''}</div></div></button>`).join('')}</div>`;
+    }).join('');
+    el.innerHTML=`<div class="api-results">${groupedHtml}<div style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:6px">Bir kitaba tıklayarak formu otomatik doldurun</div></div>`;
+  }
 }
 
 function applyGResult(i){
