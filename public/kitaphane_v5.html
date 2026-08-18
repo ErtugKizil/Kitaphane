@@ -301,7 +301,7 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 const STATUS_LABELS = {unread:'Okunmadı',reading:'Okunuyor',finished:'Okundu',paused:'Askıda',dropped:'Bırakıldı'};
 const STATUS_CLS    = {unread:'s-unread',reading:'s-reading',finished:'s-finished',paused:'s-paused',dropped:'s-dropped'};
 const LOC_LABELS    = {home:'Evde',office:'Ofiste',lent:'Ödünç verildi',storage:'Depoda',other:'Diğer'};
-function getCategories(){const fromBooks=[...new Set(books.map(b=>b.category).filter(Boolean))].sort();return fromBooks;}
+function getCategories(){const fromBooks=[...new Set([...books.map(b=>b.category),(editForm&&editForm.category)||null].filter(Boolean))].sort();return fromBooks;}
 const API_KEY = 'AIzaSyAuMmEu0ObGWsh7j25rMk7efRTjwxNhVcg';
 const STORAGE_KEY = 'kitaphane_books_v1';
 
