@@ -301,7 +301,7 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 const STATUS_LABELS = {unread:'Okunmadı',reading:'Okunuyor',finished:'Okundu',paused:'Askıda',dropped:'Bırakıldı'};
 const STATUS_CLS    = {unread:'s-unread',reading:'s-reading',finished:'s-finished',paused:'s-paused',dropped:'s-dropped'};
 const LOC_LABELS    = {home:'Evde',office:'Ofiste',lent:'Ödünç verildi',storage:'Depoda',other:'Diğer'};
-const CATS = ['Roman','Klasikler','Fantastik','Bilimkurgu','Polisiye','Gerilim/Korku','Çizgi Roman','Kişisel Gelişim','Tarih','Felsefe','Psikoloji','Biyografi','Gezi','Bilim','Sağlık','Ekonomi','Teknoloji'];
+function getCategories(){const fromBooks=[...new Set(books.map(b=>b.category).filter(Boolean))].sort();return fromBooks;}
 const API_KEY = 'AIzaSyAuMmEu0ObGWsh7j25rMk7efRTjwxNhVcg';
 const STORAGE_KEY = 'kitaphane_books_v1';
 
@@ -463,7 +463,7 @@ function renderLibrary(){
   </div>
   <div class="filter-row">
     <select class="filter-select ${filters.category?'has-value':''}" onchange="filters.category=this.value;renderPage()">
-      <option value="">Kategori</option>${CATS.map(c=>`<option value="${c}" ${filters.category===c?'selected':''}>${c}</option>`).join('')}
+      <option value="">Kategori</option>${getCategories().map(c=>`<option value="${c}" ${filters.category===c?'selected':''}>${c}</option>`).join('')}
     </select>
     <select class="filter-select ${filters.status?'has-value':''}" onchange="filters.status=this.value;renderPage()">
       <option value="">Durum</option>${Object.entries(STATUS_LABELS).map(([v,l])=>`<option value="${v}" ${filters.status===v?'selected':''}>${l}</option>`).join('')}
@@ -677,7 +677,7 @@ function renderAddEdit(){
     <div class="form-group"><label class="form-label">Yayınevi</label><input type="text" class="form-input" value="${esc(f.publisher||'')}" placeholder="Yayınevi adı" oninput="editForm.publisher=this.value"></div>
     <div class="form-group"><label class="form-label">Yayın Yılı</label><input type="number" class="form-input" value="${f.publishYear||''}" placeholder="2024" oninput="editForm.publishYear=+this.value||''"></div>
     <div class="form-group"><label class="form-label">Sayfa Sayısı</label><input type="number" class="form-input" value="${f.pageCount||''}" placeholder="300" oninput="editForm.pageCount=+this.value||''"></div>
-    <div class="form-group"><label class="form-label">Kategori</label><select class="form-input" onchange="editForm.category=this.value"><option value="">Seçin...</option>${CATS.map(c=>`<option value="${c}" ${f.category===c?'selected':''}>${c}</option>`).join('')}</select></div>
+    <div class="form-group"><label class="form-label">Kategori</label><select class="form-input" onchange="editForm.category=this.value"><option value="">Seçin...</option>${getCategories().map(c=>`<option value="${c}" ${f.category===c?'selected':''}>${c}</option>`).join('')}</select></div>
     <div class="form-group"><label class="form-label">Dil</label><select class="form-input" onchange="editForm.language=this.value">${['Türkçe','İngilizce','Almanca','Fransızca','İspanyolca','Diğer'].map(l=>`<option ${(f.language||'Türkçe')===l?'selected':''}>${l}</option>`).join('')}</select></div>
   </div>
   <div class="form-group"><label class="form-label">Kapak Görseli URL</label><input type="url" class="form-input" value="${esc(f.coverUrl||'')}" placeholder="https://..." oninput="editForm.coverUrl=this.value"></div>
