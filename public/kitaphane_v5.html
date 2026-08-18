@@ -618,20 +618,16 @@ async function loadPublisherRecommendations(publisher, currentTitle){
   }
 }
 function updateFormFields(){
+  const searchEl=document.getElementById('gsearch-results');
+  const savedHtml=searchEl?searchEl.innerHTML:'';
   renderPage();
-  // Arama sonuçlarını koru
+  // Arama kutusundaki yazıyı koru
+  const input=document.getElementById('gbooks-q');
+  if(input)input.value=document.getElementById('gbooks-q-val')||'';
+  // Arama listesini temizle, sadece "seçildi" mesajı göster
   const el=document.getElementById('gsearch-results');
-  if(el&&gSearchResults.length>0){
-    const grouped={};
-    gSearchResults.forEach((r,i)=>{const pub=r.publisher||'__bilinmiyor__';if(!grouped[pub])grouped[pub]=[];grouped[pub].push({...r,_idx:i});});
-    const knownPubs=Object.keys(grouped).filter(p=>p!=='__bilinmiyor__').sort();
-    const allPubs=grouped['__bilinmiyor__']?[...knownPubs,'__bilinmiyor__']:knownPubs;
-    const groupedHtml=allPubs.map(pub=>{
-      const label=pub==='__bilinmiyor__'?'Yayınevi: Bilinmiyor':pub;
-      const bks=grouped[pub];
-      return `<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--warm-brown);padding:7px 10px;background:var(--cream2);border-radius:var(--radius);margin-bottom:7px;display:flex;align-items:center;gap:6px"><span>🏛</span><span>${esc(label)}</span></div>${bks.map(r=>`<button class="api-result" onclick="applyGResult(${r._idx})">${r.coverUrl?`<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`:`<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}<div class="api-result-info"><div class="api-result-title">${esc(r.title)}</div><div class="api-result-sub">${esc(r.author)}</div><div class="api-result-sub">${r.isbn?'ISBN: '+r.isbn:''}${r.publishYear?' · '+r.publishYear:''}${r.pageCount?' · '+r.pageCount+' sayfa':''}</div></div></button>`).join('')}</div>`;
-    }).join('');
-    el.innerHTML=`<div class="api-results">${groupedHtml}<div style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:6px">Bir kitaba tıklayarak formu otomatik doldurun</div></div>`;
+  if(el&&editForm.title){
+    el.innerHTML=`<div style="padding:10px 12px;font-size:13px;color:var(--olive);background:var(--olive-pale);border-radius:var(--radius);margin-top:8px;display:flex;align-items:center;gap:6px">✓ <strong>${esc(editForm.title)}</strong> seçildi</div>`;
   }
 }
 
