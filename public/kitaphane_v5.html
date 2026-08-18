@@ -709,7 +709,7 @@ function renderAddEdit(){
   <div class="form-group"><label class="form-label">Kişisel Not</label><textarea class="form-input" rows="3" style="resize:none;line-height:1.6" placeholder="Bu kitap hakkında notlarınız..." oninput="editForm.personalNote=this.value">${esc(f.personalNote||'')}</textarea></div>
   <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
     <button class="btn btn-primary" style="flex:1;padding:13px" onclick="submitForm(${isEdit?`'${currentBookId}'`:'null'})">${isEdit?'Değişiklikleri Kaydet':'Koleksiyona Ekle'}</button>
-    ${!isEdit?`<button class="btn btn-wish" style="padding:13px 20px" onclick="submitFormWish()">♥ İstek Listesine Ekle</button>`:''}
+    ${!isEdit?'<button class="btn btn-wish" style="padding:13px 20px" onclick="submitFormWish()">♥ İstek Listesine Ekle</button>':''}
     <button class="btn btn-ghost" style="padding:13px 24px" onclick="editForm=null;navigate(${isEdit?`'detail','${currentBookId}'`:"'library'"})">İptal</button>
   </div>
 }
