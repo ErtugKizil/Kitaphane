@@ -50,58 +50,33 @@ h1,h2,h3,.serif{font-family:'Playfair Display',serif}
 
 #app{display:flex;min-height:100vh}
 
-.sidebar{
-  width:var(--sidebar-w);
-  background:rgba(43,33,24,.97);
-  backdrop-filter:blur(12px);
-  position:fixed;top:0;left:0;bottom:0;
-  display:flex;flex-direction:column;
-  z-index:200;
-  border-right:1px solid rgba(255,255,255,.06);
-}
-.sidebar::after{
-  content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
-  background:linear-gradient(180deg,transparent,var(--copper) 40%,var(--gold) 70%,transparent);
-  opacity:.3;
-}
-
+.sidebar{width:var(--sidebar-w);background:rgba(43,33,24,.97);backdrop-filter:blur(12px);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:200;border-right:1px solid rgba(255,255,255,.06);}
+.sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,var(--copper) 40%,var(--gold) 70%,transparent);opacity:.3;}
 .sidebar-logo{padding:28px 20px 24px;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;display:flex;align-items:center;gap:11px;}
 .sidebar-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--warm-brown),var(--copper));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,.3);flex-shrink:0;}
 .sidebar-logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:-.02em}
 .sidebar-logo-tagline{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-top:1px;font-weight:500}
-
 .sidebar-nav{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:4px}
-
 .nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--radius);border:none;background:none;color:rgba(255,255,255,.5);font-family:'Manrope',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all .18s;letter-spacing:.01em;width:100%;text-align:left;}
 .nav-item-icon{font-size:17px;width:22px;text-align:center;flex-shrink:0;transition:transform .18s}
 .nav-item:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.85)}
 .nav-item:hover .nav-item-icon{transform:scale(1.15)}
 .nav-item.active{background:rgba(196,154,108,.18);color:var(--copper);font-weight:600}
 .nav-item.active .nav-item-icon{filter:drop-shadow(0 0 4px rgba(196,154,108,.5))}
-
 .sidebar-add{margin:12px;padding:14px 18px;background:linear-gradient(135deg,var(--copper) 0%,var(--gold) 60%,#D4882A 100%);color:var(--espresso);border:none;border-radius:var(--radius-lg);font-family:'Manrope',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .22s cubic-bezier(.25,.8,.25,1);display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.01em;box-shadow:0 4px 18px rgba(180,130,50,.35),inset 0 1px 0 rgba(255,255,255,.3);position:relative;overflow:hidden;}
 .sidebar-add::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 60%);border-radius:var(--radius-lg);}
 .sidebar-add:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(180,130,50,.48),inset 0 1px 0 rgba(255,255,255,.3);filter:brightness(1.06);}
 .sidebar-add:active{transform:translateY(0)}
 .sidebar-add-icon{font-size:18px;position:relative}
 .sidebar-add-label{position:relative}
-
 .sidebar-footer{padding:16px 14px;border-top:1px solid rgba(255,255,255,.06);font-size:11px;color:rgba(255,255,255,.2);text-align:center;letter-spacing:.05em;}
-
 .content{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh;}
-
 main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 
 .hero{margin-bottom:40px;padding-bottom:36px;border-bottom:1px solid rgba(90,56,37,.1)}
 .hero h1{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:var(--text-dark);line-height:1.08;margin-bottom:12px;letter-spacing:-.02em}
 .hero h1 em{color:var(--dark-brown);font-style:italic}
 .hero p{font-size:17px;color:var(--text-muted);margin-bottom:26px;font-weight:400;max-width:480px;line-height:1.65}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
-.hero-btn-primary{background:var(--espresso);color:var(--cream);border:none;padding:13px 28px;border-radius:var(--radius-lg);font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;letter-spacing:.01em;box-shadow:0 2px 10px rgba(43,33,24,.2);}
-.hero-btn-primary:hover{background:var(--dark-brown);box-shadow:0 5px 18px rgba(43,33,24,.3);transform:translateY(-1px)}
-.hero-btn-secondary{background:transparent;color:var(--dark-brown);border:1.5px solid var(--tan);padding:12px 28px;border-radius:var(--radius-lg);font-family:'Manrope',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;letter-spacing:.01em;}
-.hero-btn-secondary:hover{background:var(--cream2);border-color:var(--warm-brown);color:var(--espresso);transform:translateY(-1px)}
-
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:36px}
 .stat-card{background:var(--surface);border:1px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);padding:22px;position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s}
 .stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--tan),transparent);opacity:.4}
@@ -109,12 +84,10 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .stat-icon{width:38px;height:38px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:14px}
 .stat-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--text-dark);line-height:1;margin-bottom:5px}
 .stat-label{font-size:12px;color:var(--text-faint);font-weight:500;letter-spacing:.06em;text-transform:uppercase}
-
 .section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
 .section-title{font-family:'Playfair Display',serif;font-size:23px;font-weight:700;color:var(--text-dark);letter-spacing:-.01em}
 .see-all{background:none;border:none;font-size:14px;font-weight:500;color:var(--warm-brown);cursor:pointer;display:flex;align-items:center;gap:4px;font-family:'Manrope',sans-serif;letter-spacing:.03em;transition:color .15s}
 .see-all:hover{color:var(--dark-brown)}
-
 .reading-strip{display:flex;flex-direction:column;gap:10px;margin-bottom:36px}
 .reading-item{background:var(--surface);border:1px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);padding:18px;display:flex;gap:14px;align-items:center;cursor:pointer;transition:all .18s;position:relative}
 .reading-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--olive-light);border-radius:var(--radius-lg) 0 0 var(--radius-lg)}
@@ -125,7 +98,6 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .reading-author{font-size:13px;color:var(--text-muted);margin-top:2px;font-weight:400}
 .reading-note{font-size:12px;color:var(--text-faint);font-style:italic;margin-top:5px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 .arrow{color:var(--sand);font-size:20px;flex-shrink:0}
-
 .book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(154px,1fr));gap:16px}
 .book-card{background:var(--surface);border:1px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:all .22s cubic-bezier(.25,.8,.25,1);position:relative}
 .book-card:hover{box-shadow:0 8px 28px rgba(43,33,24,.13);border-color:rgba(90,56,37,.22);transform:translateY(-3px)}
@@ -145,7 +117,6 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .book-title{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:600;color:var(--text-dark);line-height:1.35;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .book-author{font-size:11.5px;color:var(--warm-brown);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:400}
 .book-location{font-size:10.5px;color:var(--text-faint);margin-top:5px;display:flex;align-items:center;gap:3px;font-weight:500}
-
 .book-list{display:flex;flex-direction:column;gap:7px}
 .book-list-item{background:var(--surface);border:1px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);padding:14px 18px;display:flex;align-items:center;gap:13px;cursor:pointer;transition:all .18s}
 .book-list-item:hover{border-color:rgba(90,56,37,.2);box-shadow:0 2px 10px rgba(43,33,24,.07);transform:translateX(2px)}
@@ -155,13 +126,11 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .list-author{font-size:12px;color:var(--warm-brown);margin-top:2px;font-weight:400}
 .list-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .list-location{font-size:11px;color:var(--text-faint)}
-
 .s-unread{background:var(--status-unread-bg);color:var(--status-unread-fg)}
 .s-reading{background:var(--status-reading-bg);color:var(--status-reading-fg)}
 .s-finished{background:var(--status-finished-bg);color:var(--status-finished-fg)}
 .s-paused{background:var(--status-paused-bg);color:var(--status-paused-fg)}
 .s-dropped{background:var(--status-dropped-bg);color:var(--status-dropped-fg)}
-
 .rated-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .rated-item{background:var(--surface);border:1px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);padding:14px;display:flex;gap:12px;cursor:pointer;transition:all .18s}
 .rated-item:hover{border-color:rgba(90,56,37,.2);box-shadow:0 2px 10px rgba(43,33,24,.07)}
@@ -169,8 +138,6 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .rated-title{font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:var(--text-dark);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .rated-author{font-size:11px;color:var(--warm-brown);margin-top:2px;font-weight:400}
 .rated-stars{display:flex;gap:2px;margin-top:5px}
-.rated-star{font-size:12px}
-
 .search-row{display:flex;gap:8px;margin-bottom:14px}
 .search-wrap{position:relative;flex:1}
 .search-wrap input{width:100%;padding:11px 38px 11px 40px;border:1.5px solid rgba(90,56,37,.15);border-radius:var(--radius-lg);background:var(--surface);font-family:'Manrope',sans-serif;font-size:15px;color:var(--text-dark);outline:none;transition:border .18s,box-shadow .18s}
@@ -186,7 +153,6 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .filter-select{padding:7px 30px 7px 13px;border:1.5px solid rgba(90,56,37,.15);border-radius:20px;background:var(--surface);font-family:'Manrope',sans-serif;font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A6240' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;transition:all .15s}
 .filter-select:focus,.filter-select:hover{border-color:var(--warm-brown);color:var(--text-dark)}
 .filter-select.has-value{background-color:var(--dark-brown);color:var(--cream);border-color:var(--dark-brown);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23F5EFE6' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")}
-
 .detail-wrap{display:grid;grid-template-columns:210px 1fr;gap:36px}
 .detail-cover{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:var(--radius-lg);box-shadow:4px 8px 28px rgba(43,33,24,.2);background:var(--cream2)}
 .detail-cover-placeholder{width:100%;aspect-ratio:2/3;background:linear-gradient(160deg,var(--cream2) 0%,var(--cream3) 100%);border-radius:var(--radius-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px}
@@ -204,7 +170,6 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .note-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);font-weight:600;margin-bottom:5px}
 .note-text{font-size:14px;color:var(--text-mid);font-style:italic;line-height:1.65}
 .detail-actions{display:flex;gap:9px;flex-direction:column;margin-top:16px}
-
 .btn{border:none;padding:11px 20px;border-radius:var(--radius-lg);font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:7px;letter-spacing:.02em}
 .btn-primary{background:var(--dark-brown);color:var(--cream);box-shadow:0 1px 4px rgba(43,33,24,.2)}
 .btn-primary:hover{background:var(--espresso);box-shadow:0 3px 14px rgba(43,33,24,.28);transform:translateY(-1px)}
@@ -216,7 +181,6 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .btn-danger:hover{background:rgba(124,58,42,.08)}
 .back-btn{background:none;border:none;color:var(--warm-brown);cursor:pointer;font-family:'Manrope',sans-serif;font-size:14px;font-weight:500;display:flex;align-items:center;gap:6px;margin-bottom:24px;padding:0;transition:color .15s;letter-spacing:.01em}
 .back-btn:hover{color:var(--dark-brown)}
-
 .form-wrap{max-width:620px}
 .form-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--warm-brown);border-bottom:1px solid rgba(90,56,37,.12);padding-bottom:10px;margin-bottom:18px}
 .form-group{margin-bottom:18px}
@@ -240,7 +204,6 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .rating-pip{width:38px;height:38px;border-radius:var(--radius);border:1.5px solid rgba(90,56,37,.15);background:var(--surface);font-size:14px;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center}
 .rating-pip.sel{background:var(--dark-brown);color:var(--cream);border-color:var(--dark-brown)}
 .rating-pip:hover{border-color:var(--warm-brown)}
-
 .wish-list{display:flex;flex-direction:column;gap:12px}
 .wish-item{background:var(--surface);border:1.5px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);display:flex;gap:14px;padding:18px;transition:all .18s}
 .wish-item:hover{border-color:rgba(90,56,37,.2);box-shadow:0 3px 12px rgba(43,33,24,.07)}
@@ -259,7 +222,6 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .wish-act-detail{background:var(--cream2);color:var(--text-mid);border:1px solid rgba(90,56,37,.12)}
 .wish-act-detail:hover{background:var(--cream3)}
 .wish-footer{background:var(--cream2);border:1.5px solid rgba(90,56,37,.1);border-radius:var(--radius-lg);padding:16px;text-align:center;margin-top:20px;font-size:14px;color:var(--text-muted);font-weight:400}
-
 .publisher-group{margin-bottom:32px}
 .publisher-group-header{display:flex;align-items:center;gap:9px;padding:10px 16px;background:var(--cream2);border:1.5px solid rgba(90,56,37,.12);border-radius:var(--radius-lg);margin-bottom:14px}
 .publisher-group-icon{font-size:15px}
@@ -269,16 +231,18 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
 .empty-icon{font-size:38px;color:var(--sand);margin-bottom:14px}
 .empty-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--text-mid);margin-bottom:7px}
 .empty-sub{font-size:15px;color:var(--text-faint)}
-
 #toast{position:fixed;bottom:28px;right:28px;background:var(--espresso);color:var(--cream);padding:12px 22px;border-radius:var(--radius-lg);font-size:15px;font-weight:500;opacity:0;transition:opacity .28s,transform .28s;pointer-events:none;z-index:999;transform:translateY(6px);box-shadow:0 4px 20px rgba(43,33,24,.3);border:1px solid rgba(255,255,255,.06)}
 #toast.show{opacity:1;transform:translateY(0)}
-
-/* Arama yükleniyor animasyonu */
 .search-loading{display:flex;align-items:center;gap:8px;padding:14px;font-size:13px;color:var(--text-faint)}
 .search-loading-dot{width:6px;height:6px;border-radius:50%;background:var(--warm-brown);animation:bounce 1.2s infinite}
 .search-loading-dot:nth-child(2){animation-delay:.2s}
 .search-loading-dot:nth-child(3){animation-delay:.4s}
 @keyframes bounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+
+/* Yayınevi Önerileri */
+.pub-recommendations{background:var(--cream2);border:1.5px solid rgba(90,56,37,.12);border-radius:var(--radius-lg);padding:18px;margin-top:28px}
+.pub-rec-title{font-size:14px;font-weight:700;color:var(--text-mid);margin-bottom:14px;display:flex;align-items:center;gap:7px;font-family:'Manrope',sans-serif}
+.pub-rec-grid{display:flex;flex-direction:column;gap:7px}
 
 @media(max-width:860px){
   .sidebar{width:64px}
@@ -312,16 +276,13 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
     </div>
     <nav class="sidebar-nav">
       <button class="nav-item active" id="nav-home" onclick="navigate('home')">
-        <span class="nav-item-icon">🏠</span>
-        <span>Ana Sayfa</span>
+        <span class="nav-item-icon">🏠</span><span>Ana Sayfa</span>
       </button>
       <button class="nav-item" id="nav-library" onclick="navigate('library')">
-        <span class="nav-item-icon">📖</span>
-        <span>Kütüphanem</span>
+        <span class="nav-item-icon">📖</span><span>Kütüphanem</span>
       </button>
       <button class="nav-item" id="nav-wishlist" onclick="navigate('wishlist')">
-        <span class="nav-item-icon">♥</span>
-        <span>İstek Listesi</span>
+        <span class="nav-item-icon">♥</span><span>İstek Listesi</span>
       </button>
     </nav>
     <button class="sidebar-add" onclick="navigate('add')">
@@ -330,7 +291,6 @@ main{padding:36px 36px;flex:1;max-width:1000px;width:100%;}
     </button>
     <div class="sidebar-footer">kitaphane © 2024</div>
   </aside>
-
   <div class="content">
     <main id="main-content"></main>
   </div>
@@ -342,17 +302,17 @@ const STATUS_LABELS = {unread:'Okunmadı',reading:'Okunuyor',finished:'Okundu',p
 const STATUS_CLS    = {unread:'s-unread',reading:'s-reading',finished:'s-finished',paused:'s-paused',dropped:'s-dropped'};
 const LOC_LABELS    = {home:'Evde',office:'Ofiste',lent:'Ödünç verildi',storage:'Depoda',other:'Diğer'};
 const CATS = ['Roman','Klasikler','Fantastik','Bilimkurgu','Polisiye','Gerilim/Korku','Çizgi Roman','Kişisel Gelişim','Tarih','Felsefe','Psikoloji','Biyografi','Gezi','Bilim','Sağlık','Ekonomi','Teknoloji'];
-
+const API_KEY = 'AIzaSyAuMmEu0ObGWsh7j25rMk7efRTjwxNhVcg';
 const STORAGE_KEY = 'kitaphane_books_v1';
 
 const DEMO_BOOKS = [
   {id:'1',title:'Suç ve Ceza',author:'Fyodor Dostoyevski',isbn:'9789750719387',publisher:'İş Bankası',publishYear:1866,pageCount:672,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8091016-L.jpg',description:'Rus edebiyatının başyapıtlarından biri.',status:'finished',location:'home',personalNote:'İkinci kez okuyorum. Her seferinde farklı bir şey keşfediyorum.',rating:5,addedAt:'2024-01-15',finishedAt:'2024-02-20',inWishlist:false},
   {id:'1b',title:'Suç ve Ceza',author:'Fyodor Dostoyevski',isbn:'9789750812345',publisher:'Can Yayınları',publishYear:1866,pageCount:704,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8226560-L.jpg',description:'Can Yayınları baskısı.',status:'unread',location:'home',addedAt:'2024-05-10',inWishlist:false},
   {id:'2',title:'Sapiens',author:'Yuval Noah Harari',isbn:'9789750519284',publisher:'Kolektif Kitap',publishYear:2011,pageCount:512,category:'Tarih',coverUrl:'https://covers.openlibrary.org/b/id/8739161-L.jpg',description:'İnsanlık tarihinin cesur ve kapsamlı bir yorumu.',status:'finished',location:'office',rating:4,addedAt:'2024-02-01',finishedAt:'2024-03-10',inWishlist:false},
-  {id:'3',title:'Dune',author:'Frank Herbert',isbn:'9780441013593',publisher:'Ace Books',publishYear:1965,pageCount:688,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8475307-L.jpg',description:'Arrakis gezegeninde geçen bilim kurgu efsanesi.',status:'reading',location:'home',personalNote:'Sayfa 300\'deyim. Paul\'un yolculuğu büyüleyici.',rating:5,addedAt:'2024-03-05',startedAt:'2024-04-01',inWishlist:false},
+  {id:'3',title:'Dune',author:'Frank Herbert',isbn:'9780441013593',publisher:'Ace Books',publishYear:1965,pageCount:688,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/8475307-L.jpg',description:'Arrakis gezegeninde geçen bilim kurgu efsanesi.',status:'reading',location:'home',personalNote:'Sayfa 300\'deyim.',rating:5,addedAt:'2024-03-05',startedAt:'2024-04-01',inWishlist:false},
   {id:'4',title:'Düşünceler',author:'Marcus Aurelius',isbn:'9789750726439',publisher:'İş Bankası',publishYear:180,pageCount:224,category:'Felsefe',coverUrl:'https://covers.openlibrary.org/b/id/12019385-L.jpg',description:'Stoacı felsefenin en saf biçimi.',status:'finished',location:'home',personalNote:'Her sabah bir bölüm okuyorum.',rating:5,addedAt:'2023-11-10',finishedAt:'2024-01-05',inWishlist:false},
   {id:'5',title:'Sıfır\'dan Bir\'e',author:'Peter Thiel',isbn:'9786055029371',publisher:'Optimist',publishYear:2014,pageCount:195,category:'Ekonomi',coverUrl:'https://covers.openlibrary.org/b/id/8226560-L.jpg',description:'Startup dünyasına dair fikirler.',status:'unread',location:'storage',addedAt:'2024-04-20',inWishlist:false},
-  {id:'6',title:'Bilinçdışının Psikolojisi',author:'Carl Gustav Jung',isbn:'9789750721731',publisher:'İş Bankası',publishYear:1912,pageCount:288,category:'Psikoloji',coverUrl:'https://covers.openlibrary.org/b/id/9256697-L.jpg',description:'Bilinçdışı zihnin derinliklerini keşfeder.',status:'paused',location:'home',personalNote:'Orta kısımda takıldım, biraz zor.',rating:3,addedAt:'2024-02-14',startedAt:'2024-03-01',inWishlist:false},
+  {id:'6',title:'Bilinçdışının Psikolojisi',author:'Carl Gustav Jung',isbn:'9789750721731',publisher:'İş Bankası',publishYear:1912,pageCount:288,category:'Psikoloji',coverUrl:'https://covers.openlibrary.org/b/id/9256697-L.jpg',description:'Bilinçdışı zihnin derinliklerini keşfeder.',status:'paused',location:'home',personalNote:'Orta kısımda takıldım.',rating:3,addedAt:'2024-02-14',startedAt:'2024-03-01',inWishlist:false},
   {id:'7',title:'Kör Saatçi',author:'Richard Dawkins',isbn:'9789750722981',publisher:'TÜBİTAK',publishYear:1986,pageCount:376,category:'Bilim',coverUrl:'https://covers.openlibrary.org/b/id/8091017-L.jpg',description:'Evrim teorisini olağanüstü bir açıklıkla anlatır.',status:'unread',location:'lent',personalNote:'Ahmet\'e ödünç verdim.',addedAt:'2024-01-08',inWishlist:false},
   {id:'8',title:'Yüzyıllık Yalnızlık',author:'Gabriel García Márquez',isbn:'9789750718533',publisher:'Can Yayınları',publishYear:1967,pageCount:432,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/9255326-L.jpg',description:'Büyülü gerçekçiliğin şaheseri.',status:'finished',location:'home',rating:5,addedAt:'2023-09-01',finishedAt:'2023-10-15',inWishlist:false},
   {id:'w1',title:'Gece Yarısı Kütüphanesi',author:'Matt Haig',isbn:'9786051881867',publisher:'Domingo',publishYear:2020,pageCount:304,category:'Roman',coverUrl:'https://covers.openlibrary.org/b/id/10519040-L.jpg',description:'Nora Seed, ölümle hayat arasındaki kütüphanede kendini bulur.',status:'unread',location:'other',addedAt:'2024-04-10',inWishlist:true},
@@ -360,22 +320,15 @@ const DEMO_BOOKS = [
   {id:'w3',title:'The Pragmatic Programmer',author:'David Thomas',isbn:'9780135957059',publisher:'Addison-Wesley',publishYear:2019,pageCount:352,category:'Teknoloji',coverUrl:'https://covers.openlibrary.org/b/id/9327787-L.jpg',description:'Yazılım geliştirmenin felsefesi.',status:'unread',location:'other',addedAt:'2024-05-01',inWishlist:true},
 ];
 
-function loadBooks(){
-  try{const saved=localStorage.getItem(STORAGE_KEY);if(saved)return JSON.parse(saved);}catch(e){}
-  return DEMO_BOOKS;
-}
-function saveBooks(){
-  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(books));}catch(e){}
-}
-
-let books = loadBooks();
+function loadBooks(){try{const s=localStorage.getItem(STORAGE_KEY);if(s)return JSON.parse(s);}catch(e){}return DEMO_BOOKS;}
+function saveBooks(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(books));}catch(e){}}
+let books=loadBooks();
 let currentPage='home',currentBookId=null,viewMode='grid',searchQ='',filters={category:'',status:'',location:'',publisher:'',author:''},editForm=null;
 
 function getBook(id){return books.find(b=>b.id===id)}
 function library(){return books.filter(b=>!b.inWishlist)}
 function wishlist(){return books.filter(b=>b.inWishlist)}
 function stats(){const lib=library();return{total:lib.length,finished:lib.filter(b=>b.status==='finished').length,reading:lib.filter(b=>b.status==='reading').length,wishlist:wishlist().length}}
-
 function filtered(){
   return library().filter(b=>{
     if(searchQ){const q=searchQ.toLowerCase();if(!b.title.toLowerCase().includes(q)&&!b.author.toLowerCase().includes(q)&&!(b.isbn||'').toLowerCase().includes(q)&&!(b.publisher||'').toLowerCase().includes(q))return false}
@@ -387,16 +340,33 @@ function filtered(){
     return true;
   });
 }
-
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2400)}
-
 function navigate(page,bookId){
   currentPage=page;currentBookId=bookId||null;
   ['home','library','wishlist'].forEach(p=>{const btn=document.getElementById('nav-'+p);if(btn)btn.classList.toggle('active',p===page)});
   render();
 }
-
 function esc(str){return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function parseBookItem(item){
+  const info=item.volumeInfo||{};
+  const isbn13=(info.industryIdentifiers||[]).find(x=>x.type==='ISBN_13');
+  const isbn10=(info.industryIdentifiers||[]).find(x=>x.type==='ISBN_10');
+  const isbn=(isbn13||isbn10||{}).identifier||'';
+  const rawCover=(info.imageLinks||{}).thumbnail||(info.imageLinks||{}).smallThumbnail||'';
+  return {
+    title:info.title||'',
+    author:(info.authors||[]).join(', '),
+    isbn,
+    publisher:info.publisher||'',
+    publishYear:info.publishedDate?parseInt(info.publishedDate):'',
+    pageCount:info.pageCount||'',
+    description:info.description?info.description.slice(0,400):'',
+    coverUrl:rawCover.replace('http://','https://'),
+    category:(info.categories||[])[0]||'',
+    language:info.language==='tr'?'Türkçe':info.language==='en'?'İngilizce':info.language||'Diğer',
+  };
+}
 
 function renderHome(){
   const s=stats();
@@ -458,52 +428,23 @@ function renderLibrary(){
   const publishers=[...new Set(lib.map(b=>b.publisher).filter(Boolean))].sort();
   const authors=[...new Set(lib.map(b=>b.author).filter(Boolean))].sort();
   const anyFilter=filters.category||filters.status||filters.location||filters.publisher||filters.author;
-
-  const titleMatchedBooks = searchQ
-    ? (() => {
-        const q = searchQ.toLowerCase();
-        const titleMatches = res.filter(b => b.title.toLowerCase().includes(q));
-        const distinctPublishers = new Set(titleMatches.map(b => b.publisher || 'Yayınevi Bilinmiyor'));
-        return titleMatches.length > 1 && distinctPublishers.size > 1 ? titleMatches : null;
-      })()
-    : null;
-  const showGrouped = !!titleMatchedBooks && !filters.publisher;
-
+  const titleMatchedBooks=searchQ?(()=>{const q=searchQ.toLowerCase();const tm=res.filter(b=>b.title.toLowerCase().includes(q));const dp=new Set(tm.map(b=>b.publisher||'Yayınevi Bilinmiyor'));return tm.length>1&&dp.size>1?tm:null;})():null;
+  const showGrouped=!!titleMatchedBooks&&!filters.publisher;
   let resultsHtml='';
   if(res.length===0){
     resultsHtml=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Sonuç bulunamadı</div><div class="empty-sub">Arama kriterlerinizi değiştirin.</div></div>`;
   } else if(showGrouped){
     const grouped={};
-    titleMatchedBooks.forEach(b=>{
-      const pub=b.publisher||'Yayınevi Bilinmiyor';
-      if(!grouped[pub])grouped[pub]=[];
-      grouped[pub].push(b);
-    });
+    titleMatchedBooks.forEach(b=>{const pub=b.publisher||'Yayınevi Bilinmiyor';if(!grouped[pub])grouped[pub]=[];grouped[pub].push(b);});
     const pubs=Object.keys(grouped).sort();
-    const titleMatchedIds = new Set(titleMatchedBooks.map(b=>b.id));
-    const otherRes = res.filter(b=>!titleMatchedIds.has(b.id));
-    const groupedHtml = pubs.map(pub=>`
-      <div class="publisher-group">
-        <div class="publisher-group-header">
-          <span class="publisher-group-icon">🏛</span>
-          <span class="publisher-group-name">${esc(pub)}</span>
-          <span class="publisher-group-count">${grouped[pub].length} kitap</span>
-        </div>
-        ${viewMode==='grid'
-          ?`<div class="book-grid">${grouped[pub].map(b=>bookCard(b)).join('')}</div>`
-          :renderListView(grouped[pub])}
-      </div>`).join('');
-    const otherHtml = otherRes.length
-      ? `<div style="margin-top:10px;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--text-faint);letter-spacing:.06em;text-transform:uppercase">Diğer Sonuçlar</div>
-         ${viewMode==='grid'?`<div class="book-grid">${otherRes.map(b=>bookCard(b)).join('')}</div>`:renderListView(otherRes)}`
-      : '';
-    resultsHtml = groupedHtml + otherHtml;
+    const tmIds=new Set(titleMatchedBooks.map(b=>b.id));
+    const otherRes=res.filter(b=>!tmIds.has(b.id));
+    const groupedHtml=pubs.map(pub=>`<div class="publisher-group"><div class="publisher-group-header"><span class="publisher-group-icon">🏛</span><span class="publisher-group-name">${esc(pub)}</span><span class="publisher-group-count">${grouped[pub].length} kitap</span></div>${viewMode==='grid'?`<div class="book-grid">${grouped[pub].map(b=>bookCard(b)).join('')}</div>`:renderListView(grouped[pub])}</div>`).join('');
+    const otherHtml=otherRes.length?`<div style="margin-top:10px;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--text-faint);letter-spacing:.06em;text-transform:uppercase">Diğer Sonuçlar</div>${viewMode==='grid'?`<div class="book-grid">${otherRes.map(b=>bookCard(b)).join('')}</div>`:renderListView(otherRes)}`:'';
+    resultsHtml=groupedHtml+otherHtml;
   } else {
-    resultsHtml = viewMode==='grid'
-      ?`<div class="book-grid">${res.map(b=>bookCard(b)).join('')}</div>`
-      :renderListView(res);
+    resultsHtml=viewMode==='grid'?`<div class="book-grid">${res.map(b=>bookCard(b)).join('')}</div>`:renderListView(res);
   }
-
   return `
   <div class="section-header" style="margin-bottom:18px">
     <div><h1 class="section-title" style="font-size:30px">Kütüphanem</h1>
@@ -539,6 +480,30 @@ function renderLibrary(){
     ${anyFilter?`<button class="filter-select" style="cursor:pointer;color:var(--chestnut);border-color:rgba(124,58,42,.25)" onclick="filters={category:'',status:'',location:'',publisher:'',author:''};renderPage()">× Temizle</button>`:''}
   </div>
   <div id="lib-results">${resultsHtml}</div>`;
+}
+
+function renderLibraryResults(){
+  const res=filtered();
+  const lib=library();
+  const titleMatchedBooks=searchQ?(()=>{const q=searchQ.toLowerCase();const tm=res.filter(b=>b.title.toLowerCase().includes(q));const dp=new Set(tm.map(b=>b.publisher||'Yayınevi Bilinmiyor'));return tm.length>1&&dp.size>1?tm:null;})():null;
+  const showGrouped=!!titleMatchedBooks&&!filters.publisher;
+  let resultsHtml='';
+  if(res.length===0){
+    resultsHtml=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Sonuç bulunamadı</div><div class="empty-sub">Arama kriterlerinizi değiştirin.</div></div>`;
+  } else if(showGrouped){
+    const grouped={};
+    titleMatchedBooks.forEach(b=>{const pub=b.publisher||'Yayınevi Bilinmiyor';if(!grouped[pub])grouped[pub]=[];grouped[pub].push(b);});
+    const pubs=Object.keys(grouped).sort();
+    const tmIds=new Set(titleMatchedBooks.map(b=>b.id));
+    const otherRes=res.filter(b=>!tmIds.has(b.id));
+    const groupedHtml=pubs.map(pub=>`<div class="publisher-group"><div class="publisher-group-header"><span class="publisher-group-icon">🏛</span><span class="publisher-group-name">${esc(pub)}</span><span class="publisher-group-count">${grouped[pub].length} kitap</span></div>${viewMode==='grid'?`<div class="book-grid">${grouped[pub].map(b=>bookCard(b)).join('')}</div>`:renderListView(grouped[pub])}</div>`).join('');
+    const otherHtml=otherRes.length?`<div style="margin-top:10px;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--text-faint);letter-spacing:.06em;text-transform:uppercase">Diğer Sonuçlar</div>${viewMode==='grid'?`<div class="book-grid">${otherRes.map(b=>bookCard(b)).join('')}</div>`:renderListView(otherRes)}`:'';
+    resultsHtml=groupedHtml+otherHtml;
+  } else {
+    resultsHtml=viewMode==='grid'?`<div class="book-grid">${res.map(b=>bookCard(b)).join('')}</div>`:renderListView(res);
+  }
+  const el=document.getElementById('lib-results');if(el)el.innerHTML=resultsHtml;
+  const c=document.getElementById('lib-count');if(c)c.textContent=`${lib.length} kitap · ${res.length} sonuç`;
 }
 
 function renderListView(items){
@@ -588,126 +553,92 @@ function renderDetail(){
 
 // ── GOOGLE BOOKS API ──────────────────────────────────────────────
 let gSearchResults = [];
+let pubRecResults = [];
 
 async function doGSearch(){
-  const input = document.getElementById('gbooks-q');
-  if(!input) return;
-  const q = input.value.trim();
-  if(!q) return;
-
-  const el = document.getElementById('gsearch-results');
-  if(!el) return;
-
-  // Yükleniyor göster
-  el.innerHTML = `<div class="search-loading">
-    <div class="search-loading-dot"></div>
-    <div class="search-loading-dot"></div>
-    <div class="search-loading-dot"></div>
-    <span style="margin-left:4px">Aranıyor...</span>
-  </div>`;
-
-  try {
-    // ISBN ile arama yapılıyorsa isbn: prefix ekle
-    const isIsbn = /^[0-9\-]{9,}$/.test(q);
-    const query = isIsbn ? `isbn:${q}` : encodeURIComponent(q);
-    const url = `https://www.googleapis.com/books/v1/volumes?key=AIzaSyAuMmEu0ObGWsh7j25rMk7efRTjwxNhVcg&q=${query}&maxResults=8`;
-
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if(!data.items || data.items.length === 0){
-      el.innerHTML = `<div style="padding:12px;font-size:13px;color:var(--text-faint);text-align:center">Sonuç bulunamadı. Farklı anahtar kelimeler deneyin.</div>`;
-      return;
-    }
-
-    // Sonuçları sakla (applyGResult için)
-    const searchTerm = q.toLowerCase();
-    gSearchResults = data.items.map(item => {
-      const info = item.volumeInfo || {};
-      const isbn13 = (info.industryIdentifiers || []).find(x => x.type === 'ISBN_13');
-      const isbn10 = (info.industryIdentifiers || []).find(x => x.type === 'ISBN_10');
-      const isbn = (isbn13 || isbn10 || {}).identifier || '';
-      const rawCover = (info.imageLinks || {}).thumbnail || (info.imageLinks || {}).smallThumbnail || '';
-      const coverUrl = rawCover.replace('http://', 'https://');
-      return {
-        title: info.title || '',
-        author: (info.authors || []).join(', '),
-        isbn,
-        publisher: info.publisher || '',
-        publishYear: info.publishedDate ? parseInt(info.publishedDate) : '',
-        pageCount: info.pageCount || '',
-        description: info.description ? info.description.slice(0, 400) : '',
-        coverUrl,
-        category: (info.categories || [])[0] || '',
-        language: info.language === 'tr' ? 'Türkçe' : info.language === 'en' ? 'İngilizce' : info.language || 'Diğer',
-      };
-    }).filter(r => r.title.toLowerCase().includes(searchTerm)); // Kural 1: arama kelimesi başlıkta geçmeli
-
-    if(gSearchResults.length === 0){
-      el.innerHTML = `<div style="padding:12px;font-size:13px;color:var(--text-faint);text-align:center">Sonuç bulunamadı. Farklı anahtar kelimeler deneyin.</div>`;
-      return;
-    }
-
-    // Kural 2 & 3: Yayınevine göre grupla, bilinmeyenler en alta
-    const grouped = {};
-    gSearchResults.forEach((r, i) => {
-      const pub = r.publisher || '__bilinmiyor__';
-      if(!grouped[pub]) grouped[pub] = [];
-      grouped[pub].push({...r, _idx: i});
-    });
-
-    // Bilinen yayınevleri alfabetik, bilinmeyenler en sona
-    const knownPubs = Object.keys(grouped).filter(p => p !== '__bilinmiyor__').sort();
-    const allPubs = grouped['__bilinmiyor__'] ? [...knownPubs, '__bilinmiyor__'] : knownPubs;
-
-    const groupedHtml = allPubs.map(pub => {
-      const label = pub === '__bilinmiyor__' ? 'Yayınevi: Bilinmiyor' : pub;
-      const books = grouped[pub];
-      return `
-        <div style="margin-bottom:14px">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--warm-brown);padding:7px 10px;background:var(--cream2);border-radius:var(--radius);margin-bottom:7px;display:flex;align-items:center;gap:6px">
-            <span>🏛</span><span>${esc(label)}</span>
-          </div>
-          ${books.map(r => `
-            <button class="api-result" onclick="applyGResult(${r._idx})">
-              ${r.coverUrl
-                ? `<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`
-                : `<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}
-              <div class="api-result-info">
-                <div class="api-result-title">${esc(r.title)}</div>
-                <div class="api-result-sub">${esc(r.author)}</div>
-                <div class="api-result-sub">${r.isbn ? 'ISBN: ' + r.isbn : ''}${r.publishYear ? ' · ' + r.publishYear : ''}${r.pageCount ? ' · ' + r.pageCount + ' sayfa' : ''}</div>
-              </div>
-            </button>`).join('')}
-        </div>`;
+  const input=document.getElementById('gbooks-q');
+  if(!input)return;
+  const q=input.value.trim();
+  if(!q)return;
+  const el=document.getElementById('gsearch-results');
+  if(!el)return;
+  el.innerHTML=`<div class="search-loading"><div class="search-loading-dot"></div><div class="search-loading-dot"></div><div class="search-loading-dot"></div><span style="margin-left:4px">Aranıyor...</span></div>`;
+  try{
+    const isIsbn=/^[0-9\-]{9,}$/.test(q);
+    const query=isIsbn?`isbn:${q}`:encodeURIComponent(q);
+    const url=`https://www.googleapis.com/books/v1/volumes?key=${API_KEY}&q=${query}&maxResults=8`;
+    const res=await fetch(url);
+    const data=await res.json();
+    if(!data.items||data.items.length===0){el.innerHTML=`<div style="padding:12px;font-size:13px;color:var(--text-faint);text-align:center">Sonuç bulunamadı.</div>`;return;}
+    const searchTerm=q.toLowerCase();
+    gSearchResults=data.items.map(parseBookItem).filter(r=>r.title.toLowerCase().includes(searchTerm));
+    if(gSearchResults.length===0){el.innerHTML=`<div style="padding:12px;font-size:13px;color:var(--text-faint);text-align:center">Sonuç bulunamadı.</div>`;return;}
+    const grouped={};
+    gSearchResults.forEach((r,i)=>{const pub=r.publisher||'__bilinmiyor__';if(!grouped[pub])grouped[pub]=[];grouped[pub].push({...r,_idx:i});});
+    const knownPubs=Object.keys(grouped).filter(p=>p!=='__bilinmiyor__').sort();
+    const allPubs=grouped['__bilinmiyor__']?[...knownPubs,'__bilinmiyor__']:knownPubs;
+    const groupedHtml=allPubs.map(pub=>{
+      const label=pub==='__bilinmiyor__'?'Yayınevi: Bilinmiyor':pub;
+      const bks=grouped[pub];
+      return `<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--warm-brown);padding:7px 10px;background:var(--cream2);border-radius:var(--radius);margin-bottom:7px;display:flex;align-items:center;gap:6px"><span>🏛</span><span>${esc(label)}</span></div>${bks.map(r=>`<button class="api-result" onclick="applyGResult(${r._idx})">${r.coverUrl?`<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`:`<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}<div class="api-result-info"><div class="api-result-title">${esc(r.title)}</div><div class="api-result-sub">${esc(r.author)}</div><div class="api-result-sub">${r.isbn?'ISBN: '+r.isbn:''}${r.publishYear?' · '+r.publishYear:''}${r.pageCount?' · '+r.pageCount+' sayfa':''}</div></div></button>`).join('')}</div>`;
     }).join('');
+    el.innerHTML=`<div class="api-results">${groupedHtml}<div style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:6px">Bir kitaba tıklayarak formu otomatik doldurun</div></div>`;
+  }catch(err){
+    el.innerHTML=`<div style="padding:12px;font-size:13px;color:var(--chestnut);text-align:center">Bağlantı hatası.</div>`;
+  }
+}
 
-    el.innerHTML = `<div class="api-results">
-      ${groupedHtml}
-      <div style="font-size:11px;color:var(--text-faint);text-align:center;margin-top:6px">Bir kitaba tıklayarak formu otomatik doldurun</div>
-    </div>`;
-
-  } catch(err) {
-    el.innerHTML = `<div style="padding:12px;font-size:13px;color:var(--chestnut);text-align:center">
-      Bağlantı hatası. İnternet bağlantınızı kontrol edin.
-    </div>`;
+async function loadPublisherRecommendations(publisher, currentTitle){
+  if(!publisher) return;
+  const el=document.getElementById('pub-recommendations');
+  if(!el) return;
+  el.innerHTML=`<div class="pub-rec-title">🏛 ${esc(publisher)} — Diğer Kitaplar</div><div class="search-loading"><div class="search-loading-dot"></div><div class="search-loading-dot"></div><div class="search-loading-dot"></div><span style="margin-left:4px">Yükleniyor...</span></div>`;
+  try{
+    const url=`https://www.googleapis.com/books/v1/volumes?key=${API_KEY}&q=publisher:${encodeURIComponent(publisher)}&maxResults=6`;
+    const res=await fetch(url);
+    const data=await res.json();
+    if(!data.items||data.items.length===0){el.innerHTML='';return;}
+    pubRecResults=data.items.map(parseBookItem).filter(r=>r.title.toLowerCase()!==currentTitle.toLowerCase());
+    if(pubRecResults.length===0){el.innerHTML='';return;}
+    el.innerHTML=`
+      <div class="pub-rec-title">🏛 ${esc(publisher)} — Diğer Kitaplar</div>
+      <div class="pub-rec-grid">
+        ${pubRecResults.slice(0,5).map((r,i)=>`
+          <button class="api-result" onclick="applyPubRec(${i})">
+            ${r.coverUrl?`<img src="${esc(r.coverUrl)}" class="api-result-img" onerror="this.style.display='none'" alt="">`:`<div class="api-result-img" style="display:flex;align-items:center;justify-content:center;font-size:18px">📖</div>`}
+            <div class="api-result-info">
+              <div class="api-result-title">${esc(r.title)}</div>
+              <div class="api-result-sub">${esc(r.author)}</div>
+              <div class="api-result-sub">${r.publishYear?r.publishYear:''}${r.pageCount?' · '+r.pageCount+' sayfa':''}</div>
+            </div>
+          </button>`).join('')}
+      </div>`;
+  }catch(err){
+    el.innerHTML='';
   }
 }
 
 function applyGResult(i){
-  const r = gSearchResults[i];
-  if(!r) return;
-  editForm = {
-    ...editForm,
-    ...r,
-    status: editForm.status || 'unread',
-    location: editForm.location || 'home',
-    rating: editForm.rating || 0,
-    inWishlist: false,
-    personalNote: editForm.personalNote || '',
-  };
+  const r=gSearchResults[i];
+  if(!r)return;
+  editForm={...editForm,...r,status:editForm.status||'unread',location:editForm.location||'home',rating:editForm.rating||0,inWishlist:false,personalNote:editForm.personalNote||''};
   renderPage();
   toast('✓ Kitap bilgileri forma aktarıldı');
+  // Yayınevi önerilerini yükle
+  if(r.publisher){
+    setTimeout(()=>loadPublisherRecommendations(r.publisher, r.title), 100);
+  }
+}
+
+function applyPubRec(i){
+  const r=pubRecResults[i];
+  if(!r)return;
+  editForm={...editForm,...r,status:editForm.status||'unread',location:editForm.location||'home',rating:editForm.rating||0,inWishlist:false,personalNote:editForm.personalNote||''};
+  renderPage();
+  toast('✓ Kitap bilgileri forma aktarıldı');
+  if(r.publisher){
+    setTimeout(()=>loadPublisherRecommendations(r.publisher, r.title), 100);
+  }
 }
 // ─────────────────────────────────────────────────────────────────
 
@@ -724,8 +655,7 @@ function renderAddEdit(){
   <div class="search-box">
     <div class="search-box-title">🔍 Google Books ile Ara</div>
     <div style="display:flex;gap:8px">
-      <input id="gbooks-q" type="text" class="form-input" placeholder="Kitap adı, yazar veya ISBN..." style="flex:1"
-        onkeydown="if(event.key==='Enter'){event.preventDefault();doGSearch()}">
+      <input id="gbooks-q" type="text" class="form-input" placeholder="Kitap adı, yazar veya ISBN..." style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();doGSearch()}">
       <button class="btn btn-primary" onclick="doGSearch()">Ara</button>
     </div>
     <div id="gsearch-results"></div>
@@ -767,7 +697,9 @@ function renderAddEdit(){
   <div style="display:flex;gap:10px;margin-top:10px">
     <button class="btn btn-primary" style="flex:1;padding:13px" onclick="submitForm(${isEdit?`'${currentBookId}'`:'null'})">${isEdit?'Değişiklikleri Kaydet':'Koleksiyona Ekle'}</button>
     <button class="btn btn-ghost" style="padding:13px 24px" onclick="editForm=null;navigate(${isEdit?`'detail','${currentBookId}'`:"'library'"})">İptal</button>
-  </div></div>`;
+  </div>
+  ${!isEdit&&f.publisher?`<div id="pub-recommendations" class="pub-recommendations"></div>`:`<div id="pub-recommendations"></div>`}
+  </div>`;
 }
 
 function renderWishlist(){
@@ -809,66 +741,6 @@ function submitForm(editId){
   if(!editForm.author){document.getElementById('err-author').style.display='block';document.getElementById('f-author').classList.add('error');return}
   if(editId){const idx=books.findIndex(b=>b.id===editId);if(idx!==-1)books[idx]={...books[idx],...editForm};saveBooks();toast('Değişiklikler kaydedildi');editForm=null;navigate('detail',editId)}
   else{const newBook={...editForm,id:'book-'+Date.now(),addedAt:new Date().toISOString().split('T')[0]};books.push(newBook);saveBooks();toast('Kitap koleksiyona eklendi');editForm=null;navigate('detail',newBook.id)}
-}
-
-function renderLibraryResults(){
-  const res=filtered();
-  const lib=library();
-  const anyFilter=filters.category||filters.status||filters.location||filters.publisher||filters.author;
-
-  const titleMatchedBooks = searchQ
-    ? (() => {
-        const q = searchQ.toLowerCase();
-        const titleMatches = res.filter(b => b.title.toLowerCase().includes(q));
-        const distinctPublishers = new Set(titleMatches.map(b => b.publisher || 'Yayınevi Bilinmiyor'));
-        return titleMatches.length > 1 && distinctPublishers.size > 1 ? titleMatches : null;
-      })()
-    : null;
-  const showGrouped = !!titleMatchedBooks && !filters.publisher;
-
-  let resultsHtml='';
-  if(res.length===0){
-    resultsHtml=`<div class="empty"><div class="empty-icon">📚</div><div class="empty-title">Sonuç bulunamadı</div><div class="empty-sub">Arama kriterlerinizi değiştirin.</div></div>`;
-  } else if(showGrouped){
-    const grouped={};
-    titleMatchedBooks.forEach(b=>{
-      const pub=b.publisher||'Yayınevi Bilinmiyor';
-      if(!grouped[pub])grouped[pub]=[];
-      grouped[pub].push(b);
-    });
-    const pubs=Object.keys(grouped).sort();
-    const titleMatchedIds = new Set(titleMatchedBooks.map(b=>b.id));
-    const otherRes = res.filter(b=>!titleMatchedIds.has(b.id));
-    const groupedHtml = pubs.map(pub=>`
-      <div class="publisher-group">
-        <div class="publisher-group-header">
-          <span class="publisher-group-icon">🏛</span>
-          <span class="publisher-group-name">${esc(pub)}</span>
-          <span class="publisher-group-count">${grouped[pub].length} kitap</span>
-        </div>
-        ${viewMode==='grid'
-          ?`<div class="book-grid">${grouped[pub].map(b=>bookCard(b)).join('')}</div>`
-          :renderListView(grouped[pub])}
-      </div>`).join('');
-    const otherHtml = otherRes.length
-      ? `<div style="margin-top:10px;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--text-faint);letter-spacing:.06em;text-transform:uppercase">Diğer Sonuçlar</div>
-         ${viewMode==='grid'?`<div class="book-grid">${otherRes.map(b=>bookCard(b)).join('')}</div>`:renderListView(otherRes)}`
-      : '';
-    resultsHtml = groupedHtml + otherHtml;
-  } else {
-    resultsHtml = viewMode==='grid'
-      ?`<div class="book-grid">${res.map(b=>bookCard(b)).join('')}</div>`
-      :renderListView(res);
-  }
-
-  // Sadece sonuç alanını ve sayacı güncelle
-  const resultsEl = document.getElementById('lib-results');
-  if(resultsEl) resultsEl.innerHTML = resultsHtml;
-  const countEl = document.getElementById('lib-count');
-  if(countEl) countEl.textContent = `${lib.length} kitap · ${res.length} sonuç`;
-  // Temizle butonunu güncelle
-  const clearEl = document.getElementById('lib-clear');
-  if(clearEl) clearEl.style.display = searchQ ? 'block' : 'none';
 }
 
 function renderPage(){
